@@ -1,0 +1,93 @@
+package com.papei.movie_ticket_reservations.model;
+
+import jakarta.persistence.*;
+
+import java.sql.Timestamp;
+
+@Entity
+@Table (name = "RESERVATION")
+public class Reservation {
+
+    @Id
+    private Long id;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TIMESTAMP")
+    private Timestamp timestamp;
+
+    @Column(name = "EMAIL_SENT")
+    private boolean email_sent;
+
+    @OneToOne
+    @JoinColumn (name = "USER_ID" , referencedColumnName = "id")
+    private User user;
+
+    @OneToOne
+    @JoinColumn (name = "MOVIE_ID" , referencedColumnName = "id")
+    private Movie movie;
+
+    @OneToOne
+    @JoinColumn (name = "HOUR_ID" , referencedColumnName = "id")
+    private Hour hour;
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public boolean isEmail_sent() {
+        return email_sent;
+    }
+
+    public void setEmail_sent(boolean email_sent) {
+        this.email_sent = email_sent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public Hour getHour() {
+        return hour;
+    }
+
+    public void setHour(Hour hour) {
+        this.hour = hour;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", timestamp=" + timestamp +
+                ", email_sent=" + email_sent +
+                ", user=" + user +
+                ", movie=" + movie +
+                ", hour=" + hour +
+                '}';
+    }
+}
