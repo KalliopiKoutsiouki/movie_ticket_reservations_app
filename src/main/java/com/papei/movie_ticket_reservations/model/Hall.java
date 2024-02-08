@@ -8,6 +8,7 @@ import java.util.Arrays;
 @Table(name = "HALL")
 public class Hall {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "CODE")

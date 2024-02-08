@@ -9,13 +9,14 @@ import java.util.Date;
 public class DateRange {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "FROM")
-    private Date from;
+    @Column(name = "FROM_DATE")
+    private Date fromDate;
 
-    @Column(name = "TO")
-    private Date to;
+    @Column(name = "TO_DATE")
+    private Date toDate;
 
     @OneToOne(mappedBy = "dateRange")
     private Movie movie;
@@ -28,20 +29,20 @@ public class DateRange {
         this.id = id;
     }
 
-    public Date getFrom() {
-        return from;
+    public Date getFromDate() {
+        return fromDate;
     }
 
-    public void setFrom(Date from) {
-        this.from = from;
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
     }
 
-    public Date getTo() {
-        return to;
+    public Date getToDate() {
+        return toDate;
     }
 
-    public void setTo(Date to) {
-        this.to = to;
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 
     public Movie getMovie() {
@@ -56,8 +57,8 @@ public class DateRange {
     public String toString() {
         return "DateRange{" +
                 "id=" + id +
-                ", from=" + from +
-                ", to=" + to +
+                ", from=" + fromDate +
+                ", to=" + toDate +
                 ", movie=" + movie +
                 '}';
     }
