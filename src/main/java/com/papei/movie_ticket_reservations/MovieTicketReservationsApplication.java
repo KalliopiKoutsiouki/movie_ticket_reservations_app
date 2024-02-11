@@ -20,6 +20,7 @@ public class MovieTicketReservationsApplication {
     public static void main(String[] args) {
         SpringApplication.run(MovieTicketReservationsApplication.class, args);
     }
+
 }
 
 

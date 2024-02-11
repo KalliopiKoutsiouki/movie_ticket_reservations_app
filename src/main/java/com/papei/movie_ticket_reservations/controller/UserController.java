@@ -11,19 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/api/"})
+@RequestMapping({"/api/users"})
 public class UserController {
     @Autowired
     private UserService userService = new UserServiceImpl();
 
-    public UserController() {
-    }
-
     @CrossOrigin(
             origins = {"http://localhost:4200"}
     )
-
-    @GetMapping({"/users"})
+    @GetMapping({"/all"})
     public ResponseEntity<List<User>> getUsers() {
         List<User> ratings = this.userService.getAllUsers();
         return new ResponseEntity<>(ratings, HttpStatus.OK);

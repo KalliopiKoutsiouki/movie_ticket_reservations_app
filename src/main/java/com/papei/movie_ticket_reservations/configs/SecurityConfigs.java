@@ -17,6 +17,15 @@ public class SecurityConfigs {
                 .requestMatchers(
                         new AntPathRequestMatcher("/h2-console/**")
                 ).permitAll()
+                .requestMatchers(
+                        new AntPathRequestMatcher("/swagger-ui/**")
+                ).permitAll()
+                .requestMatchers(
+                        new AntPathRequestMatcher("/swagger-resources/*")
+                ).permitAll()
+                .requestMatchers(
+                        new AntPathRequestMatcher("/v3/api-docs/**")
+                ).permitAll()
                 .anyRequest().authenticated()
         );
         http.csrf((csrf) ->
