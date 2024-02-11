@@ -3,7 +3,7 @@ package com.papei.movie_ticket_reservations.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "`HOUR`")
+@Table(name = "HOURS")
 public class Hour {
 
     @Id
