@@ -1,3 +1,4 @@
+## Summary
 An all-in-one web platform allowing users to easily book movie tickets and providing administrators with intuitive tools for managing reservations, movies, and theater spaces.
 
 ## Key Features
