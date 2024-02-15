@@ -25,12 +25,15 @@ public class User {
     private String password;
 
     @Column(name = "FIRST_NAME")
+    @NotNull(message = "First name is mandatory")
     private String firstName;
 
     @Column(name = "LAST_NAME")
+    @NotNull(message = "Last name is mandatory")
     private String lastName;
 
     @Column(name = "EMAIL", unique = true)
+    @NotNull(message = "Email is mandatory")
     private String email;
 
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)

@@ -2,12 +2,10 @@ package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.model.security.AuthRequest;
 import com.papei.movie_ticket_reservations.model.User;
-import com.papei.movie_ticket_reservations.service.UserService;
 import com.papei.movie_ticket_reservations.service.impl.JwtService;
 import com.papei.movie_ticket_reservations.service.impl.security.UserInfoService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,11 +27,6 @@ public class UserController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Welcome this endpoint is not secure";
-    }
 
     @PostMapping("/addNewUser")
     public String addNewUser(@RequestBody User userInfo) {
@@ -67,8 +60,8 @@ public class UserController {
 //    )
     @GetMapping({"/all"})
     public List<User> getUsers() {
-        List<User> ratings = this.userService.getAllUsers();
-        return ratings;
+        List<User> users = this.userService.getAllUsers();
+        return users;
     }
 
 }
