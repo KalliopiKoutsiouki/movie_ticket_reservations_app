@@ -1,6 +1,9 @@
 package com.papei.movie_ticket_reservations.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.Set;
 
 @Entity
@@ -10,6 +13,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "USER_NAME")
+    @NotNull(message = "Username is mandatory")
+    @Size(min = 6, max = 50)
+    private String userName;
+
+    @Column(name = "PASSWORD")
+    @NotNull(message = "Password is mandatory")
+    @Size(min = 6, max = 50)
+    private String password;
 
     @Column(name = "FIRST_NAME")
     private String firstName;
@@ -42,6 +55,30 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public String getFirstName() {
