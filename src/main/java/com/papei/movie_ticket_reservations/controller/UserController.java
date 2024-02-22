@@ -1,67 +1,65 @@
 package com.papei.movie_ticket_reservations.controller;
 
-import com.papei.movie_ticket_reservations.model.security.AuthRequest;
+import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
 import com.papei.movie_ticket_reservations.model.User;
-import com.papei.movie_ticket_reservations.service.impl.JwtService;
-import com.papei.movie_ticket_reservations.service.impl.security.UserInfoService;
+import com.papei.movie_ticket_reservations.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @SecurityRequirement(name = "Authorization")
-@RequestMapping({"/auth"})
+@RequestMapping({"/users"})
 public class UserController {
-
     @Autowired
-    private UserInfoService userService;
+    private UserService userService;
 
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @PostMapping("/addNewUser")
-    public String addNewUser(@RequestBody User userInfo) {
-        return userService.addUser(userInfo);
+    @GetMapping({"/all"})
+    public List<User> getUsers() {
+        return this.userService.getAllUsers();
     }
 
-    @GetMapping("/user/userProfile")
-//    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public String userProfile() {
-        return "Welcome to User Profile";
-    }
-
-    @GetMapping("/admin/adminProfile")
-//    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public String adminProfile() {
-        return "Welcome to Admin Profile";
-    }
-
-    @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("invalid user request !");
+    @GetMapping({"/{userId}"})
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        try {
+            User user = userService.getUserById(userId).orElse(null);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
-    //    @CrossOrigin(
-//            origins = {"http://localhost:4200"}
-//    )
-    @GetMapping({"/all"})
-    public List<User> getUsers() {
-        List<User> users = this.userService.getAllUsers();
-        return users;
+    @PostMapping("/new")
+    public User addNewUser(@RequestBody User userInfo) {
+        return userService.addUser(userInfo);
+    }
+
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+        try {
+            User user = userService.updateUser(userId, updatedUser);
+            return ResponseEntity.ok("User updated successfully");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        try {
+            userService.deleteUser(userId);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 }

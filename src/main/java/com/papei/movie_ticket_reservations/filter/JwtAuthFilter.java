@@ -1,6 +1,6 @@
 package com.papei.movie_ticket_reservations.filter;
 import com.papei.movie_ticket_reservations.service.impl.JwtService;
-import com.papei.movie_ticket_reservations.service.impl.security.UserInfoService;
+import com.papei.movie_ticket_reservations.service.impl.security.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private UserInfoService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

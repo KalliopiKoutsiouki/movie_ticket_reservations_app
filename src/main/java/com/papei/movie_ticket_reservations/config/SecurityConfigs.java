@@ -1,7 +1,7 @@
 package com.papei.movie_ticket_reservations.config;
 
 import com.papei.movie_ticket_reservations.filter.JwtAuthFilter;
-import com.papei.movie_ticket_reservations.service.impl.security.UserInfoService;
+import com.papei.movie_ticket_reservations.service.impl.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +30,7 @@ public class SecurityConfigs {
     // User Creation
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserInfoService();
+        return new UserDetailsServiceImpl();
     }
 
     @Bean
@@ -45,7 +44,7 @@ public class SecurityConfigs {
                                 .requestMatchers(new AntPathRequestMatcher("/v3/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/auth/welcome")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/auth/addNewUser")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/users/new")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
 //                                .requestMatchers("/auth/user/**").authenticated()
 //                                .requestMatchers("/auth/admin/**").authenticated()
@@ -56,7 +55,8 @@ public class SecurityConfigs {
         http.csrf((csrf) ->
                 csrf.ignoringRequestMatchers(
                         new AntPathRequestMatcher("/h2-console/**"),
-                        new AntPathRequestMatcher("/auth/**")
+                        new AntPathRequestMatcher("/auth/**"),
+                        new AntPathRequestMatcher("/users/**")
                 ).csrfTokenRepository(
                         CookieCsrfTokenRepository.withHttpOnlyFalse()
                 )
