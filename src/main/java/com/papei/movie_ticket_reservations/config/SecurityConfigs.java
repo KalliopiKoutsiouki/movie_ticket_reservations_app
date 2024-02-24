@@ -48,7 +48,7 @@ public class SecurityConfigs {
                                 .requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
 //                                .requestMatchers("/auth/user/**").authenticated()
 //                                .requestMatchers("/auth/admin/**").authenticated()
-//                        .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN", "SUPERADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/users/delete/{userId}")).hasAnyRole("ADMIN", "SUPERADMIN")
                         .anyRequest().authenticated()
                 );
         http.authenticationProvider(authenticationProvider()).addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
