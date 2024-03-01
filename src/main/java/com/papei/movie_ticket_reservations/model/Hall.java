@@ -3,6 +3,7 @@ package com.papei.movie_ticket_reservations.model;
 import jakarta.persistence.*;
 
 import java.util.Arrays;
+import java.util.Set;
 
 @Entity
 @Table(name = "HALL")
@@ -19,6 +20,14 @@ public class Hall {
 
     @OneToOne(mappedBy = "hall")
     private Movie movie;
+
+    @ManyToMany
+    @JoinTable(
+            name = "HALL_HOUR",
+            joinColumns = @JoinColumn(name = "HALL_ID"),
+            inverseJoinColumns = @JoinColumn(name = "HOUR_ID")
+    )
+    private Set<Hour> hours;
 
     public void setId(Long id) {
         this.id = id;
@@ -50,6 +59,14 @@ public class Hall {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public Set<Hour> getHours() {
+        return hours;
+    }
+
+    public void setHours(Set<Hour> hours) {
+        this.hours = hours;
     }
 
     @Override
