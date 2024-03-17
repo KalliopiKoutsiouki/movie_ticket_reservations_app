@@ -66,4 +66,10 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("User with ID " + userId + " not found");
         }
     }
+
+    @Override
+    public Optional<User> getUserByUserName(String userName) {
+        return Optional.ofNullable(repository.findByUserName(userName)
+                .orElseThrow(() -> new UserNotFoundException("User with userName " + userName + " not found")));
+    }
 }

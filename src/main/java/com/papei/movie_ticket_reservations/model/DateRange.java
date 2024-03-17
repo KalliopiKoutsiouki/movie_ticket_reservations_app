@@ -1,5 +1,7 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -12,12 +14,14 @@ public class DateRange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    @JsonFormat(pattern = "d/MM/yyyy")
     @Column(name = "FROM_DATE")
     private Date fromDate;
-
+//    @JsonFormat(pattern = "d/MM/yyyy")
     @Column(name = "TO_DATE")
     private Date toDate;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "dateRange")
     private Movie movie;
 
@@ -53,13 +57,4 @@ public class DateRange {
         this.movie = movie;
     }
 
-    @Override
-    public String toString() {
-        return "DateRange{" +
-                "id=" + id +
-                ", from=" + fromDate +
-                ", to=" + toDate +
-                ", movie=" + movie +
-                '}';
-    }
 }

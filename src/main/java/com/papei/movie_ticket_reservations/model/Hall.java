@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Arrays;
@@ -15,12 +16,13 @@ public class Hall {
     @Column(name = "CODE")
     private String code;
 
-    @Lob
-    private byte[] picture;
-
+//    @Lob
+//    private byte[] picture;
+    @JsonIgnore
     @OneToOne(mappedBy = "hall")
     private Movie movie;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "HALL_HOUR",
@@ -45,13 +47,13 @@ public class Hall {
         this.code = code;
     }
 
-    public byte[] getPicture() {
-        return picture;
-    }
-
-    public void setPicture(byte[] picture) {
-        this.picture = picture;
-    }
+//    public byte[] getPicture() {
+//        return picture;
+//    }
+//
+//    public void setPicture(byte[] picture) {
+//        this.picture = picture;
+//    }
 
     public Movie getMovie() {
         return movie;
@@ -69,13 +71,5 @@ public class Hall {
         this.hours = hours;
     }
 
-    @Override
-    public String toString() {
-        return "Hall{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", picture=" + Arrays.toString(picture) +
-                ", movie=" + movie +
-                '}';
-    }
+
 }

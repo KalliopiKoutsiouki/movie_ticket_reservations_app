@@ -15,6 +15,7 @@ import java.util.List;
 @SecurityRequirement(name = "Authorization")
 @RequestMapping({"/users"})
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -27,6 +28,20 @@ public class UserController {
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         try {
             User user = userService.getUserById(userId).orElse(null);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping({"/username/{userName}"})
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+        try {
+            User user = userService.getUserByUserName(userName).orElse(null);
             if (user != null) {
                 return ResponseEntity.ok(user);
             } else {

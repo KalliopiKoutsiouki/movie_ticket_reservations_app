@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface MovieService {
     public List<Movie> getAllMovies();
+
+    public String testMethod();
 }

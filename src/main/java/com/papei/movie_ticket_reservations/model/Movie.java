@@ -7,11 +7,18 @@ import jakarta.persistence.*;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "NAME")
     private String name;
+
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+
+    @Column(name = "PICTURE_URL")
+    private String pictureUrl;
 
     @OneToOne
     @JoinColumn(name = "HALL_ID", referencedColumnName = "id")
@@ -40,6 +47,22 @@ public class Movie {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
     public Hall getHall() {
         return hall;
     }
@@ -56,13 +79,4 @@ public class Movie {
         this.dateRange = dateRange;
     }
 
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", hall=" + hall +
-                ", dateRange=" + dateRange +
-                '}';
-    }
 }
