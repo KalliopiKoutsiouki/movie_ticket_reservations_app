@@ -2,6 +2,7 @@ package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
 import com.papei.movie_ticket_reservations.model.User;
+import com.papei.movie_ticket_reservations.model.UserRole;
 import com.papei.movie_ticket_reservations.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @SecurityRequirement(name = "Authorization")
@@ -54,6 +58,7 @@ public class UserController {
 
     @PostMapping("/new")
     public User addNewUser(@RequestBody User userInfo) {
+        setRoleIfUndefined(userInfo);
         return userService.addUser(userInfo);
     }
 
@@ -76,5 +81,15 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+
+    private void setRoleIfUndefined(User userinfo) {
+        Set<UserRole> roles = new HashSet<>();
+        if (userinfo.getUserRoles() == null) {
+            roles.add(UserRole.ROLE_USER);
+            userinfo.setUserRoles(roles);
+        }
+    }
+
 
 }

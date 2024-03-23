@@ -61,6 +61,7 @@ public class SecurityConfigs {
 //                                .requestMatchers(new AntPathRequestMatcher("/movies/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/welcome")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users/new")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/movies/all")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/url")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/auth/callback")).permitAll()
