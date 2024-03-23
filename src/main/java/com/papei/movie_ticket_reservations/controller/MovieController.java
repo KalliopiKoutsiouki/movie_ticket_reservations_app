@@ -2,6 +2,10 @@ package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.model.Movie;
 import com.papei.movie_ticket_reservations.model.User;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapper;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
+import com.papei.movie_ticket_reservations.model.mapper.impl.MovieDtoMapper;
+import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.service.MovieService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +24,12 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
+    private ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
+
     @GetMapping({"/all"})
-    public List<Movie> getAllMovies() {
-//        System.out.println(this.movieService.testMethod());
-//        return new ArrayList<>();
-        return this.movieService.getAllMovies();
+    public List<MovieDto> getAllMovies() {
+        List<Movie> movies = this.movieService.getAllMovies();
+        List<MovieDto> movieDtosList = movies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
+        return movieDtosList;
     }
 }

@@ -13,8 +13,8 @@ public class Hall {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "CODE")
-    private String code;
+    @Column(name = "NAME")
+    private String name;
 
 //    @Lob
 //    private byte[] picture;
@@ -39,12 +39,12 @@ public class Hall {
         return id;
     }
 
-    public String getCode() {
-        return code;
+    public String getName() {
+        return name;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setName(String code) {
+        this.name = code;
     }
 
 //    public byte[] getPicture() {
