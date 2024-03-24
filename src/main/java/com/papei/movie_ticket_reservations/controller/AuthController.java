@@ -1,9 +1,9 @@
 package com.papei.movie_ticket_reservations.controller;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
+//import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
+//import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
+//import com.google.api.client.http.javanet.NetHttpTransport;
+//import com.google.api.client.json.gson.GsonFactory;
 import com.papei.movie_ticket_reservations.model.security.AuthRequest;
 import com.papei.movie_ticket_reservations.pojo.dto.TokenDto;
 import com.papei.movie_ticket_reservations.pojo.dto.UrlDto;

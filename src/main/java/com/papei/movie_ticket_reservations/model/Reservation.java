@@ -48,11 +48,11 @@ public class Reservation {
         this.timestamp = timestamp;
     }
 
-    public boolean isEmail_sent() {
+    public boolean isEmailSent() {
         return email_sent;
     }
 
-    public void setEmail_sent(boolean email_sent) {
+    public void setEmailSent(boolean email_sent) {
         this.email_sent = email_sent;
     }
 
