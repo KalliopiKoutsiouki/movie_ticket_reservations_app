@@ -32,4 +32,20 @@ public class MovieController {
         List<MovieDto> movieDtosList = movies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
         return movieDtosList;
     }
+
+    @GetMapping({"/currentMovies"})
+    public List<MovieDto> getCurrentMovies() {
+        List<Movie> currentMovies = this.movieService.getCurrentMovies();
+        List<MovieDto> currentMovieDtosList = currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
+        System.out.println(currentMovieDtosList);
+        return currentMovieDtosList;
+    }
+
+    @GetMapping({"/upcomingMovies"})
+    public List<MovieDto> getUpcomingMovies() {
+        List<Movie> upcomingMovies = this.movieService.getUpcomingMovies();
+        List<MovieDto> upcomingMoviesDtoList = upcomingMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
+        System.out.println(upcomingMoviesDtoList);
+        return upcomingMoviesDtoList;
+    }
 }

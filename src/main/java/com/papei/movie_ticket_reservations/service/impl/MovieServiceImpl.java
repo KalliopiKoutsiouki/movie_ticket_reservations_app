@@ -6,6 +6,7 @@ import com.papei.movie_ticket_reservations.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -17,12 +18,17 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findAll();
     }
 
-    public String testMethod() {
-        Movie movie = new Movie();
-        movie.setId(50L);
-        movie.setName("testMovie");
-        this.movieRepository.save(movie);
-        return "Movie added";
+    @Override
+    public List<Movie> getCurrentMovies() {
+        Date currentDate = new Date();
+        return movieRepository.findCurrentMovies(currentDate);
     }
+
+    @Override
+    public List<Movie> getUpcomingMovies() {
+        Date currentDate = new Date();
+        return movieRepository.findUpcomingMovies(currentDate);
+    }
+
 
 }

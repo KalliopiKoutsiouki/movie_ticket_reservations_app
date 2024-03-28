@@ -7,16 +7,16 @@ insert into USER_ROLES (USER_ID, USERROLES) values (1, 'ROLE_USER');
 insert into USER_ROLES (USER_ID, USERROLES) values (2, 'ROLE_USER');
 
 -- DATERANGE
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (1, '2024-03-17', '2023-05-15');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (2, '2024-03-03', '2023-06-17');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (3, '2023-05-13', '2024-07-16');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (4, '2023-05-02', '2023-07-07');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (5, '2023-04-22', '2024-06-17');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (6, '2024-04-14', '2023-06-23');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (7, '2023-03-26', '2023-04-29');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (8, '2023-03-01', '2023-04-07');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (9, '2023-03-01', '2023-07-28');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (10, '2023-06-29', '2024-08-16');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (1, '2024-03-17', '2024-05-15');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (2, '2024-03-03', '2024-06-17');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (3, '2024-05-13', '2024-07-16');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (4, '2024-05-02', '2024-07-07');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (5, '2024-04-22', '2024-06-17');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (6, '2024-04-14', '2024-06-23');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (7, '2024-03-26', '2024-04-29');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (8, '2023-03-01', '2024-04-07');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (9, '2024-03-01', '2024-07-28');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (10, '2024-06-29', '2024-08-16');
 
 -- HALL
 insert into HALL (ID, NAME) values (1, 'Αίθουσα 1');

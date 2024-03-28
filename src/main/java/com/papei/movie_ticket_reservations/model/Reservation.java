@@ -23,6 +23,9 @@ public class Reservation {
     @JoinColumn (name = "USER_ID" , referencedColumnName = "id")
     private User user;
 
+    @Column(name = "NUM_SEATS")
+    private int numberOfSeats;
+
     @OneToOne
     @JoinColumn (name = "MOVIE_ID" , referencedColumnName = "id")
     private Movie movie;
@@ -80,6 +83,22 @@ public class Reservation {
         this.hour = hour;
     }
 
+    public boolean isEmail_sent() {
+        return email_sent;
+    }
+
+    public void setEmail_sent(boolean email_sent) {
+        this.email_sent = email_sent;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +
@@ -87,6 +106,7 @@ public class Reservation {
                 ", timestamp=" + timestamp +
                 ", email_sent=" + email_sent +
                 ", user=" + user +
+                ", numberOfSeats=" + numberOfSeats +
                 ", movie=" + movie +
                 ", hour=" + hour +
                 '}';

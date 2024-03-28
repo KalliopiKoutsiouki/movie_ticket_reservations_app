@@ -27,6 +27,10 @@ public class HallHour {
         this.capacity = capacity;
     }
 
+    public HallHour() {
+
+    }
+
     public Hall getHall() {
         return hall;
     }
