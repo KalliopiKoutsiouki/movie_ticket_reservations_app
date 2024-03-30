@@ -2,18 +2,30 @@ package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.exception.HallNotFoundException;
 import com.papei.movie_ticket_reservations.model.Hall;
+import com.papei.movie_ticket_reservations.model.HallHour;
+import com.papei.movie_ticket_reservations.model.Hour;
+import com.papei.movie_ticket_reservations.model.Movie;
+import com.papei.movie_ticket_reservations.repository.HallHourRepository;
 import com.papei.movie_ticket_reservations.repository.HallRepository;
+import com.papei.movie_ticket_reservations.repository.MovieRepository;
 import com.papei.movie_ticket_reservations.service.HallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HallServiceImpl implements HallService {
     @Autowired
     private HallRepository hallRepository;
+
+    @Autowired
+    private MovieRepository movieRepository;
+
+    @Autowired
+    private HallHourRepository hallHourRepository;
 
     @Override
     public List<Hall> getAllHalls() {
@@ -44,14 +56,19 @@ public class HallServiceImpl implements HallService {
         return hallRepository.save(existingHall);
     }
 
-    @Override
     public boolean deleteHall(Long hallId) {
-        Optional<Hall> hall = hallRepository.findById(hallId);
-        if (hall.isPresent()) {
-            hallRepository.deleteById(hallId);
-            return true;
-        } else {
-            throw new HallNotFoundException("Hall with ID " + hallId + " not found");
+        Hall hall = hallRepository.findById(hallId)
+                .orElseThrow(() -> new HallNotFoundException("Hall with ID " + hallId + " not found"));
+
+        List<Movie> hallMovies = movieRepository.findMoviesOfHall(hallId);
+
+//        Set<Hour> hallHours = hall.getHours();
+        for (Movie movie : hallMovies) {
+            movieRepository.deleteById(movie.getId());
         }
+
+        hallHourRepository.deleteByHallId(hall.getId());
+        hallRepository.delete(hall);
+        return true;
     }
 }

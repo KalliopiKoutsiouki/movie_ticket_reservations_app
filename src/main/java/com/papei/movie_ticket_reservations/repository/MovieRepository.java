@@ -18,4 +18,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m WHERE m.dateRange.fromDate > :currentDate")
     List<Movie> findUpcomingMovies(@Param("currentDate") Date currentDate);
+
+
+    @Query("SELECT m FROM Movie m WHERE m.hall.id = :hallId")
+    List<Movie> findMoviesOfHall(Long hallId);
+
 }
