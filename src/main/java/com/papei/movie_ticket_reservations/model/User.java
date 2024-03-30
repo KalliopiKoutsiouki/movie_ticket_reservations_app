@@ -1,9 +1,11 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,8 +51,9 @@ public class User {
     )
     private Set<Movie> movies;
 
-    @OneToOne (mappedBy = "user")
-    private Reservation reservation;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Reservation> reservations;
 
     public Long getId() {
         return id;
@@ -76,12 +79,12 @@ public class User {
         this.password = password;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public String getFirstName() {

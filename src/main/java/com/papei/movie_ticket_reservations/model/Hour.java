@@ -1,6 +1,9 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "HOURS")
@@ -16,8 +19,15 @@ public class Hour {
     @Column(name = "TO_HOUR")
     private String toHour;
 
-    @OneToOne(mappedBy = "hour")
-    private Reservation reservation;
+    @ManyToMany(mappedBy = "hours")
+    @JsonIgnore
+    private List<Hall> halls;
+
+
+    @OneToMany(mappedBy = "hour")
+    @JsonIgnore
+    private List<Reservation> reservations;
+
 
     // Default (no-argument) constructor
     public Hour() {
@@ -30,12 +40,12 @@ public class Hour {
         this.toHour = toHour;
     }
 
-    // Full constructor with all fields
-    public Hour(Long id, String fromHour, String toHour, Reservation reservation) {
-        this.id = id;
-        this.fromHour = fromHour;
-        this.toHour = toHour;
-        this.reservation = reservation;
+    public List<Hall> getHalls() {
+        return halls;
+    }
+
+    public void setHalls(List<Hall> halls) {
+        this.halls = halls;
     }
 
     public void setId(Long id) {
@@ -62,11 +72,13 @@ public class Hour {
         this.toHour = toHour;
     }
 
-    public Reservation getReservation() {
-        return reservation;
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
+
+
 }

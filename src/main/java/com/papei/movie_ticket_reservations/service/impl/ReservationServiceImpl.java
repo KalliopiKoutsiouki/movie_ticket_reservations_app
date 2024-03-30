@@ -2,8 +2,12 @@ package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.exception.ReservationNotFoundException;
 import com.papei.movie_ticket_reservations.exception.UnavailableReservationTimeException;
+import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.model.Reservation;
+import com.papei.movie_ticket_reservations.model.User;
+import com.papei.movie_ticket_reservations.repository.HourRepository;
 import com.papei.movie_ticket_reservations.repository.ReservationRepository;
+import com.papei.movie_ticket_reservations.repository.UserRepository;
 import com.papei.movie_ticket_reservations.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,12 @@ import java.util.Optional;
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private HourRepository hourRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -28,7 +38,23 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public Reservation addReservation(Reservation reservationInfo) {
+        updateHoursListOfReservations(reservationInfo);
+        updateUserListOfReservations(reservationInfo);
         return reservationRepository.save(reservationInfo);
+    }
+
+    private void updateHoursListOfReservations(Reservation reservationInfo) {
+        Hour hour = hourRepository.findById(reservationInfo.getHour().getId())
+                .orElseThrow(() -> new RuntimeException("Hour not found"));
+        hour.getReservations().add(reservationInfo);
+        hourRepository.save(hour);
+    }
+
+    private void updateUserListOfReservations(Reservation reservationInfo) {
+        User user = userRepository.findById(reservationInfo.getUser().getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.getReservations().add(reservationInfo);
+        userRepository.save(user);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
+import com.papei.movie_ticket_reservations.model.Reservation;
 import com.papei.movie_ticket_reservations.model.User;
 import com.papei.movie_ticket_reservations.model.UserRole;
 import com.papei.movie_ticket_reservations.service.UserService;
@@ -36,6 +37,21 @@ public class UserController {
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @GetMapping({"/reservations/{userName}"})
+    public ResponseEntity<List<Reservation>> getUserReservations(@PathVariable String userName) {
+        try {
+            User user = userService.getUserByUserName(userName).orElse(null);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            } else {
+                List<Reservation> reservations = user.getReservations();
+                return ResponseEntity.ok(reservations);
             }
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

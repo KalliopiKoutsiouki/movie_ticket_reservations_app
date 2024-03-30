@@ -1,8 +1,12 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table (name = "RESERVATION")
@@ -19,8 +23,11 @@ public class Reservation {
     @Column(name = "EMAIL_SENT")
     private boolean email_sent;
 
-    @OneToOne
-    @JoinColumn (name = "USER_ID" , referencedColumnName = "id")
+    @Column(name = "SELECTED_DATE")
+    private String selectedDate;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
     private User user;
 
     @Column(name = "NUM_SEATS")
@@ -30,10 +37,9 @@ public class Reservation {
     @JoinColumn (name = "MOVIE_ID" , referencedColumnName = "id")
     private Movie movie;
 
-    @OneToOne
-    @JoinColumn (name = "HOUR_ID" , referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "HOUR_ID")
     private Hour hour;
-
 
     public void setId(Long id) {
         this.id = id;
@@ -65,6 +71,14 @@ public class Reservation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getSelectedDate() {
+        return selectedDate;
+    }
+
+    public void setSelectedDate(String selectedDate) {
+        this.selectedDate = selectedDate;
     }
 
     public Movie getMovie() {
@@ -99,16 +113,5 @@ public class Reservation {
         this.numberOfSeats = numberOfSeats;
     }
 
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "id=" + id +
-                ", timestamp=" + timestamp +
-                ", email_sent=" + email_sent +
-                ", user=" + user +
-                ", numberOfSeats=" + numberOfSeats +
-                ", movie=" + movie +
-                ", hour=" + hour +
-                '}';
-    }
+
 }

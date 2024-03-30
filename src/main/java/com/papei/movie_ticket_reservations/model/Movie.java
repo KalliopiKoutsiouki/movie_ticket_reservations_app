@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Movie {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "NAME")
@@ -29,6 +29,7 @@ public class Movie {
     private DateRange dateRange;
 
     @OneToOne (mappedBy = "movie")
+
     private Reservation reservation;
 
     public Long getId() {

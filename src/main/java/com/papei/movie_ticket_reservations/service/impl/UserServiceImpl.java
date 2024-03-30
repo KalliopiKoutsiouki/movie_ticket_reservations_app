@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
         existingUser.setUserRoles(updatedUser.getUserRoles());
         existingUser.setMovies(updatedUser.getMovies());
-        existingUser.setReservation(updatedUser.getReservation());
+        existingUser.setReservations(updatedUser.getReservations());
 
         return repository.save(existingUser);
     }

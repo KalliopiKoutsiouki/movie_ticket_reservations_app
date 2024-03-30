@@ -22,7 +22,7 @@ public class Hall {
     @OneToOne(mappedBy = "hall")
     private Movie movie;
 
-    @JsonIgnore
+
     @ManyToMany
     @JoinTable(
             name = "HALL_HOUR",
