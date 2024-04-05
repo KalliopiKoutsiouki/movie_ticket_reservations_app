@@ -25,6 +25,7 @@ public class MovieDtoMapper implements ModelMapper<Movie,MovieDto > {
         movieDto.setId(model.getId());
         movieDto.setName(model.getName());
         movieDto.setHall(model.getHall());
+        movieDto.setDateRange(model.getDateRange());
         setPictureByteArray(model, movieDto);
         return movieDto;
     }

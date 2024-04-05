@@ -5,6 +5,7 @@ import com.papei.movie_ticket_reservations.exception.UnavailableReservationTimeE
 import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.model.Reservation;
 import com.papei.movie_ticket_reservations.model.User;
+import com.papei.movie_ticket_reservations.repository.HallHourRepository;
 import com.papei.movie_ticket_reservations.repository.HourRepository;
 import com.papei.movie_ticket_reservations.repository.ReservationRepository;
 import com.papei.movie_ticket_reservations.repository.UserRepository;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
     @Autowired
     private ReservationRepository reservationRepository;
 
@@ -25,6 +27,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HallHourRepository hallHourRepository;
 
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -40,8 +45,15 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addReservation(Reservation reservationInfo) {
         updateHoursListOfReservations(reservationInfo);
         updateUserListOfReservations(reservationInfo);
+        updateHallCapacity(reservationInfo);
         return reservationRepository.save(reservationInfo);
     }
+
+    private void updateHallCapacity(Reservation reservationInfo) {
+        long hallId = reservationInfo.getMovie().getHall().getId();
+        this.hallHourRepository.updateCapacity(reservationInfo.getNumberOfSeats(), hallId, reservationInfo.getHour().getId());
+    }
+
 
     private void updateHoursListOfReservations(Reservation reservationInfo) {
         Hour hour = hourRepository.findById(reservationInfo.getHour().getId())

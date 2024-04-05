@@ -14,7 +14,7 @@ insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (4, '2024-05-02', '2024-07
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (5, '2024-04-22', '2024-06-17');
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (6, '2024-04-14', '2024-06-23');
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (7, '2024-03-26', '2024-04-29');
-insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (8, '2023-03-01', '2024-04-07');
+insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (8, '2023-03-01', '2024-05-07');
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (9, '2024-03-01', '2024-07-28');
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (10, '2024-06-29', '2024-08-16');
 
@@ -34,30 +34,24 @@ insert into HOURS ( FROM_HOUR, TO_HOUR) values ('2:00 PM', '4:00 AM');
 
 -- HALL_HOUR
 insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values (4, 2, 3);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values (46, 2, 4);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values (80, 2, 1);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values (49, 2, 5);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 38, 2, 2);
 insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 48, 4, 3);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 46, 2, 4);
 insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 11, 4, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 79, 1, 5);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 2, 5, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 80, 2, 1);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 71, 3, 4);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 10, 3, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 36, 2, 3);
 insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 91, 4, 1);
-insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 64, 5, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 1, 4, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 59, 1, 4);
-insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 32, 1, 1);
-insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 74, 5, 2);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 49, 2, 5);
 insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 70, 4, 5);
 insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 30, 4, 4);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 88, 3, 2);
-insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 95, 5, 1);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 5, 4, 3);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 49, 3, 3);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 79, 1, 5);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 59, 1, 4);
+insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 32, 1, 1);
 insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 14, 1, 3);
-insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 38, 2, 2);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 2, 5, 2);
+insert into HALL_HOUR (CAPACITY, HALL_ID, HOUR_ID) values ( 95, 5, 1);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 71, 3, 4);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 10, 3, 2);
+insert into HALL_HOUR ( CAPACITY, HALL_ID, HOUR_ID) values ( 49, 3, 3);
 
 -- MOVIES
 insert into MOVIE ( NAME, DESCRIPTION, DATERANGE_ID, HALL_ID, PICTURE_URL) values ( 'Matrix', 'Neo (Keanu Reeves) believes that Morpheus (Laurence Fishburne), an elusive figure considered to be the most dangerous man alive, can answer his question -- What is the Matrix? ', 2, 5, 'matrix.jpg');

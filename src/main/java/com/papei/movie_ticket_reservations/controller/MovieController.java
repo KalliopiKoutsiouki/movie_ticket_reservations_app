@@ -37,7 +37,6 @@ public class MovieController {
     public List<MovieDto> getCurrentMovies() {
         List<Movie> currentMovies = this.movieService.getCurrentMovies();
         List<MovieDto> currentMovieDtosList = currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
-        System.out.println(currentMovieDtosList);
         return currentMovieDtosList;
     }
 

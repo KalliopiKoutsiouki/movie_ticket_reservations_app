@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.controller;
 
+import com.papei.movie_ticket_reservations.model.HallHour;
 import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.service.HallHourService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -20,7 +21,7 @@ public class HallHourController {
     private HallHourService hallHourService;
 
     @GetMapping({"/all/{hallId}"})
-    public List<Hour> getHoursByHallId(@PathVariable Long hallId) {
+    public List<HallHour> getHoursByHallId(@PathVariable Long hallId) {
         return this.hallHourService.getHoursByHallId(hallId);
     }
 

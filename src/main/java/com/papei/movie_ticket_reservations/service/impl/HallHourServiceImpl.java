@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.service.impl;
 
+import com.papei.movie_ticket_reservations.model.HallHour;
 import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.repository.HallHourRepository;
 import com.papei.movie_ticket_reservations.service.HallHourService;
@@ -15,7 +16,7 @@ public class HallHourServiceImpl implements HallHourService {
     HallHourRepository hallHourRepository;
 
     @Override
-    public List<Hour> getHoursByHallId(Long id) {
+    public List<HallHour> getHoursByHallId(Long id) {
         return this.hallHourRepository.getHoursByHallId(id);
     }
 }
