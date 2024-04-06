@@ -44,7 +44,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation addReservation(Reservation reservationInfo) {
         updateHoursListOfReservations(reservationInfo);
-        updateUserListOfReservations(reservationInfo);
+        updateUserListOfReservationsAndMovie(reservationInfo);
         updateHallCapacity(reservationInfo);
         return reservationRepository.save(reservationInfo);
     }
@@ -62,10 +62,11 @@ public class ReservationServiceImpl implements ReservationService {
         hourRepository.save(hour);
     }
 
-    private void updateUserListOfReservations(Reservation reservationInfo) {
+    private void updateUserListOfReservationsAndMovie(Reservation reservationInfo) {
         User user = userRepository.findById(reservationInfo.getUser().getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.getReservations().add(reservationInfo);
+        user.getMovies().add(reservationInfo.getMovie());
         userRepository.save(user);
     }
 

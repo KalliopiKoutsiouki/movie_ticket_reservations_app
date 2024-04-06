@@ -63,6 +63,7 @@ public class UserController {
         try {
             User user = userService.getUserByUserName(userName).orElse(null);
             if (user != null) {
+                System.out.println(user.toString());
                 return ResponseEntity.ok(user);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
