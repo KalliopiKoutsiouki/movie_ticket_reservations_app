@@ -15,6 +15,7 @@ import java.util.List;
 @SecurityRequirement(name = "Authorization")
 @RequestMapping({"/hall"})
 public class HallController {
+
     @Autowired
     private HallService hallService;
 

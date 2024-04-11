@@ -2,8 +2,6 @@ package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.exception.HallNotFoundException;
 import com.papei.movie_ticket_reservations.model.Hall;
-import com.papei.movie_ticket_reservations.model.HallHour;
-import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.model.Movie;
 import com.papei.movie_ticket_reservations.repository.HallHourRepository;
 import com.papei.movie_ticket_reservations.repository.HallRepository;
@@ -14,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class HallServiceImpl implements HallService {
+
     @Autowired
     private HallRepository hallRepository;
 

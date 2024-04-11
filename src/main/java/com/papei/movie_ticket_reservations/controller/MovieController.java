@@ -7,6 +7,7 @@ import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
 import com.papei.movie_ticket_reservations.model.mapper.impl.MovieDtoMapper;
 import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.service.MovieService;
+import com.papei.movie_ticket_reservations.service.impl.MovieServiceImpl;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,8 @@ public class MovieController {
     MovieService movieService;
 
     private ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
+
+
 
     @GetMapping({"/all"})
     public List<MovieDto> getAllMovies() {

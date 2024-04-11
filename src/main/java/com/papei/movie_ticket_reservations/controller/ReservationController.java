@@ -15,6 +15,7 @@ import java.util.List;
 @SecurityRequirement(name = "Authorization")
 @RequestMapping({"/reservation"})
 public class ReservationController {
+
     @Autowired
     private ReservationService reservationService;
 
@@ -42,23 +43,30 @@ public class ReservationController {
         return reservationService.addReservation(reservationInfo);
     }
 
-    @PutMapping("/update/{reservationId}")
-    public ResponseEntity<String> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
-        try {
-            Reservation reservation = reservationService.updateReservation(reservationId, updatedReservation);
-            return ResponseEntity.ok("Reservation updated successfully");
-        } catch (ReservationNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    @PostMapping("/update")
+    public Reservation updateReservation(@RequestBody Reservation reservationInfo) {
+
+        return reservationService.updateReservation(reservationInfo);
     }
 
+
+//    @PutMapping("/update/{reservationId}")
+//    public ResponseEntity<String> updateReservation(@PathVariable Long reservationId, @RequestBody Reservation updatedReservation) {
+//        try {
+//            Reservation reservation = reservationService.updateReservation(reservationId, updatedReservation);
+//            return ResponseEntity.ok("Reservation updated successfully");
+//        } catch (ReservationNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//        }
+//    }
+
     @DeleteMapping("/delete/{reservationId}")
-    public ResponseEntity<String> deleteReservation(@PathVariable Long reservationId) {
+    public void deleteReservation(@PathVariable Long reservationId) {
         try {
             reservationService.deleteReservation(reservationId);
-            return ResponseEntity.ok("Reservation deleted successfully");
+//            return ResponseEntity.ok("Reservation deleted successfully");
         } catch (ReservationNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 

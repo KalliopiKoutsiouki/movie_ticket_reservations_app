@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class DateRangeServiceImpl implements DateRangeService {
+
     @Autowired
     private DateRangeRepository dateRangeRepository;
 

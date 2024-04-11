@@ -2,6 +2,7 @@ package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.exception.ReservationNotFoundException;
 import com.papei.movie_ticket_reservations.exception.UnavailableReservationTimeException;
+import com.papei.movie_ticket_reservations.model.HallHour;
 import com.papei.movie_ticket_reservations.model.Hour;
 import com.papei.movie_ticket_reservations.model.Reservation;
 import com.papei.movie_ticket_reservations.model.User;
@@ -45,13 +46,36 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation addReservation(Reservation reservationInfo) {
         updateHoursListOfReservations(reservationInfo);
         updateUserListOfReservationsAndMovie(reservationInfo);
-        updateHallCapacity(reservationInfo);
+        updateHallCapacity(reservationInfo, false);
         return reservationRepository.save(reservationInfo);
     }
 
-    private void updateHallCapacity(Reservation reservationInfo) {
+    @Override
+    public Reservation updateReservation(Reservation reservationInfo) {
+        checkAndRevertHallCapacity(reservationInfo);
+        updateHoursListOfReservations(reservationInfo);
+        updateUserListOfReservationsAndMovie(reservationInfo);
+        updateHallCapacity(reservationInfo, false);
+        return reservationRepository.save(reservationInfo);
+    }
+
+    private void checkAndRevertHallCapacity(Reservation reservationInfo) {
+        Optional<Reservation> oldReservation = reservationRepository.findById(reservationInfo.getId());
+        if (oldReservation.isPresent() && oldReservation.get().getHour().getId() != reservationInfo.getHour().getId()) {
+            HallHour hallHourRecord = hallHourRepository.getHallHoursByHallAndHour(oldReservation.get().getMovie().getHall(), oldReservation.get().getHour());
+            hallHourRecord.setCapacity(hallHourRecord.getCapacity() + oldReservation.get().getNumberOfSeats());
+            hallHourRepository.save(hallHourRecord);
+        }
+    }
+
+
+    private void updateHallCapacity(Reservation reservationInfo, boolean isCancelation) {
         long hallId = reservationInfo.getMovie().getHall().getId();
-        this.hallHourRepository.updateCapacity(reservationInfo.getNumberOfSeats(), hallId, reservationInfo.getHour().getId());
+        if (isCancelation) {
+            this.hallHourRepository.updateCapacityFromCancelation(reservationInfo.getNumberOfSeats(), hallId, reservationInfo.getHour().getId());
+        } else {
+            this.hallHourRepository.updateCapacityFromReservation(reservationInfo.getNumberOfSeats(), hallId, reservationInfo.getHour().getId());
+        }
     }
 
 
@@ -70,32 +94,44 @@ public class ReservationServiceImpl implements ReservationService {
         userRepository.save(user);
     }
 
-    @Override
-    public Reservation updateReservation(Long reservationId, Reservation updatedReservation) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new ReservationNotFoundException("Reservation with ID " + reservationId + " not found"));
-
-        // Check if the new reservation time is available
-        if (!isReservationTimeAvailable(updatedReservation)) {
-            throw new UnavailableReservationTimeException("The new reservation time is not available");
-        }
-
-        // Update reservation fields
-        reservation.setUser(updatedReservation.getUser());
-        reservation.setMovie(updatedReservation.getMovie());
-        reservation.setTimestamp(updatedReservation.getTimestamp());
-        reservation.setEmailSent(updatedReservation.isEmailSent());
-        reservation.setHour(updatedReservation.getHour());
-
-        return reservationRepository.save(reservation);
-    }
+//    @Override
+//    public Reservation updateReservation(Long reservationId, Reservation updatedReservation) {
+//        Reservation reservation = reservationRepository.findById(reservationId)
+//                .orElseThrow(() -> new ReservationNotFoundException("Reservation with ID " + reservationId + " not found"));
+//
+//        // Check if the new reservation time is available
+//        if (!isReservationTimeAvailable(updatedReservation)) {
+//            throw new UnavailableReservationTimeException("The new reservation time is not available");
+//        }
+//
+//        // Update reservation fields
+//        reservation.setUser(updatedReservation.getUser());
+//        reservation.setMovie(updatedReservation.getMovie());
+//        reservation.setTimestamp(updatedReservation.getTimestamp());
+//        reservation.setEmailSent(updatedReservation.isEmailSent());
+//        reservation.setHour(updatedReservation.getHour());
+//
+//        return reservationRepository.save(reservation);
+//    }
 
     @Override
     public void deleteReservation(Long reservationId) {
-        if (!reservationRepository.existsById(reservationId)) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+        if (!reservation.isPresent()) {
             throw new ReservationNotFoundException("Reservation with ID " + reservationId + " not found");
         }
-        reservationRepository.deleteById(reservationId);
+        deleteMovieAndReservationFromUser(reservation.get());
+        updateHallCapacity(reservation.get(), true);
+       reservationRepository.deleteById(reservationId);
+    }
+
+    private void deleteMovieAndReservationFromUser(Reservation reservation) {
+           User user = userRepository.findById(reservation.getUser().getId())
+                   .orElseThrow(() -> new RuntimeException("User not found"));
+           user.getMovies().remove(reservation.getMovie());
+           user.getReservations().remove(reservation);
+           userRepository.save(user);
+
     }
 
     public boolean isReservationTimeAvailable(Reservation updatedReservation) {

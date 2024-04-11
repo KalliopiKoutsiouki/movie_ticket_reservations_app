@@ -9,13 +9,15 @@ import java.util.Optional;
 
 @Service
 public interface ReservationService {
-    public List<Reservation> getAllReservations();
+    List<Reservation> getAllReservations();
 
-    public Optional<Reservation> getReservationById(Long reservationId);
+    Optional<Reservation> getReservationById(Long reservationId);
 
-    public Reservation addReservation(Reservation reservationInfo);
+    Reservation addReservation(Reservation reservationInfo);
 
-    public Reservation updateReservation(Long reservationId, Reservation updatedReservation);
+    Reservation updateReservation(Reservation reservationInfo);
+
+//    Reservation updateReservation(Long reservationId, Reservation updatedReservation);
 
     public void deleteReservation(Long reservationId);
 }
