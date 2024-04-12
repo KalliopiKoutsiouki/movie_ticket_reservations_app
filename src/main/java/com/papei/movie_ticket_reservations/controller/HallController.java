@@ -1,7 +1,10 @@
 package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.exception.HallNotFoundException;
+import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Hall;
+import com.papei.movie_ticket_reservations.model.Movie;
+import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.service.HallService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +64,12 @@ public class HallController {
         } catch (HallNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
+    }
+
+    @GetMapping({"/dateRanges/{hallId}"})
+    public List<DateRange> getDateRangesPerHall(@PathVariable Long hallId) {
+        List<DateRange> dateRanges = this.hallService.getDateRangesPerHall(hallId);
+        return dateRanges;
     }
 
 }

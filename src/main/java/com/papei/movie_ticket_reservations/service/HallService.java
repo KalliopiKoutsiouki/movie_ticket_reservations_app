@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.service;
 
+import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Hall;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface HallService {
     public Hall updateHall(Long hallId, Hall updatedHall);
 
     public boolean deleteHall(Long hallId);
+
+    public List<DateRange> getDateRangesPerHall(Long hallId);
 }

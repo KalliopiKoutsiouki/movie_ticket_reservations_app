@@ -1,6 +1,7 @@
 package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.exception.HallNotFoundException;
+import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Hall;
 import com.papei.movie_ticket_reservations.model.Movie;
 import com.papei.movie_ticket_reservations.repository.HallHourRepository;
@@ -68,5 +69,10 @@ public class HallServiceImpl implements HallService {
         hallHourRepository.deleteByHallId(hall.getId());
         hallRepository.delete(hall);
         return true;
+    }
+
+    @Override
+    public List<DateRange> getDateRangesPerHall(Long hallId) {
+        return movieRepository.getDateRangesPerHall(hallId);
     }
 }

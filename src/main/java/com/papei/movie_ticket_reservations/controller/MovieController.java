@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.controller;
 
+import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Movie;
 import com.papei.movie_ticket_reservations.model.User;
 import com.papei.movie_ticket_reservations.model.mapper.ModelMapper;

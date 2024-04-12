@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.repository;
 
+import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Movie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,5 +23,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("SELECT m FROM Movie m WHERE m.hall.id = :hallId")
     List<Movie> findMoviesOfHall(Long hallId);
+
+    @Query("SELECT d FROM DateRange d JOIN d.movie m WHERE m.hall.id = :hallId")
+    List<DateRange> getDateRangesPerHall(Long hallId);
 
 }
