@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.service;
 
+import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
 import com.papei.movie_ticket_reservations.model.User;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,11 @@ public interface UserService {
 
     User addUser(User userInfo);
 
-    Optional<User> getUserById(Long userId);
+    Optional<User> getUserById(Long userId) throws UserNotFoundException;
 
-    User updateUser(Long userId, User updatedUser);
+    User updateUser(Long userId, User updatedUser) throws UserNotFoundException;
 
-    boolean deleteUser(Long userId);
+    boolean deleteUser(Long userId) throws UserNotFoundException;
 
-    Optional<User> getUserByUserName(String userName);
+    Optional<User> getUserByUserName(String userName) throws UserNotFoundException;
 }

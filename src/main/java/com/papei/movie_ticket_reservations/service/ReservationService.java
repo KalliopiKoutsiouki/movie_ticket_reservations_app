@@ -1,5 +1,6 @@
 package com.papei.movie_ticket_reservations.service;
 
+import com.papei.movie_ticket_reservations.exception.ReservationNotFoundException;
 import com.papei.movie_ticket_reservations.model.Hall;
 import com.papei.movie_ticket_reservations.model.Reservation;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface ReservationService {
     List<Reservation> getAllReservations();
 
-    Optional<Reservation> getReservationById(Long reservationId);
+    Optional<Reservation> getReservationById(Long reservationId) throws ReservationNotFoundException;
 
     Reservation addReservation(Reservation reservationInfo);
 
@@ -19,5 +20,5 @@ public interface ReservationService {
 
 //    Reservation updateReservation(Long reservationId, Reservation updatedReservation);
 
-    public void deleteReservation(Long reservationId);
+    public void deleteReservation(Long reservationId) throws ReservationNotFoundException;
 }

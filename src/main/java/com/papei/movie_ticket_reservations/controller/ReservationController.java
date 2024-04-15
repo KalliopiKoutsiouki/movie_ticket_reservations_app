@@ -61,13 +61,8 @@ public class ReservationController {
 //    }
 
     @DeleteMapping("/delete/{reservationId}")
-    public void deleteReservation(@PathVariable Long reservationId) {
-        try {
+    public void deleteReservation(@PathVariable Long reservationId) throws ReservationNotFoundException {
             reservationService.deleteReservation(reservationId);
-//            return ResponseEntity.ok("Reservation deleted successfully");
-        } catch (ReservationNotFoundException e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 
 }

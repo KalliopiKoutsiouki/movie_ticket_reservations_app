@@ -32,13 +32,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long userId) {
+    public Optional<User> getUserById(Long userId) throws UserNotFoundException {
         return Optional.ofNullable(repository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found")));
     }
 
     @Override
-    public User updateUser(Long userId, User updatedUser) {
+    public User updateUser(Long userId, User updatedUser) throws UserNotFoundException {
         User existingUser = repository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + userId + " not found"));
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteUser(Long userId) {
+    public boolean deleteUser(Long userId) throws UserNotFoundException {
         Optional<User> user = repository.findById(userId);
         if (user.isPresent()) {
             repository.deleteById(userId);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByUserName(String userName) {
+    public Optional<User> getUserByUserName(String userName) throws UserNotFoundException {
         return Optional.ofNullable(repository.findByUserName(userName)
                 .orElseThrow(() -> new UserNotFoundException("User with userName " + userName + " not found")));
     }
