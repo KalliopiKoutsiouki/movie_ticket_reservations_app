@@ -12,7 +12,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
-
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)
     public Map<String, String> handleUserNotFoundException (UserNotFoundException ex) {
         Map<String, String> errorMap = new HashMap<>();

@@ -2,6 +2,8 @@ package com.papei.movie_ticket_reservations.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "MOVIE")
 public class Movie {
@@ -28,9 +30,8 @@ public class Movie {
     @JoinColumn(name = "DATERANGE_ID", referencedColumnName = "id")
     private DateRange dateRange;
 
-    @OneToOne (mappedBy = "movie")
-
-    private Reservation reservation;
+    @OneToMany(mappedBy = "movie")
+    private List<Reservation> reservations;
 
     public Long getId() {
         return id;

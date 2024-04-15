@@ -59,21 +59,19 @@ public class UserController {
     }
 
     @GetMapping({"/username/{userName}"})
-    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) throws UserNotFoundException {
         try {
             User user = userService.getUserByUserName(userName).orElse(null);
             if (user != null) {
-                System.out.println(user.toString());
                 return ResponseEntity.ok(user);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new UserNotFoundException("User not found");
         }
+        return null;
     }
 
-    @PostMapping("/new")
+        @PostMapping("/new")
     public User addNewUser(@RequestBody User userInfo) {
         setRoleIfUndefined(userInfo);
         return userService.addUser(userInfo);
