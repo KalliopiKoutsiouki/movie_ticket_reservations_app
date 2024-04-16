@@ -34,6 +34,9 @@ public class User {
     @NotNull(message = "Last name is mandatory")
     private String lastName;
 
+    @Column(name = "MOBILE")
+    private String mobilePhone;
+
     @Column(name = "EMAIL", unique = true)
     @NotNull(message = "Email is mandatory")
     private String email;
@@ -125,6 +128,14 @@ public class User {
 
     public void setMovies(Set<Movie> movies) {
         this.movies = movies;
+    }
+
+    public String getMobilePhone() {
+        return mobilePhone;
+    }
+
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
 
     @Override
