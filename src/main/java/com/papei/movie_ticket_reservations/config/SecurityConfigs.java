@@ -61,6 +61,7 @@ public class SecurityConfigs {
 //                                .requestMatchers(new AntPathRequestMatcher("/movies/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/welcome")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users/new")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/movies/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/hall/**")).permitAll()
 
