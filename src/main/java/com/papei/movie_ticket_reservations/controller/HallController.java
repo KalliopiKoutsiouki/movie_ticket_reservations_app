@@ -72,4 +72,13 @@ public class HallController {
         return dateRanges;
     }
 
+    @PutMapping({"/dateRanges/{hallId}"})
+    public ResponseEntity<String> updateDateRangePerHall(@PathVariable Long hallId, @RequestBody DateRange updatedDateRange) {
+        try {
+            DateRange dateRange = hallService.updateDateRangePerHall(hallId, updatedDateRange);
+            return ResponseEntity.ok("Date range updated successfully");
+        } catch (HallNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

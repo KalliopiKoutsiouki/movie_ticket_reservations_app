@@ -4,9 +4,8 @@ import com.papei.movie_ticket_reservations.exception.HallNotFoundException;
 import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Hall;
 import com.papei.movie_ticket_reservations.model.Movie;
-import com.papei.movie_ticket_reservations.repository.HallHourRepository;
-import com.papei.movie_ticket_reservations.repository.HallRepository;
-import com.papei.movie_ticket_reservations.repository.MovieRepository;
+import com.papei.movie_ticket_reservations.model.Reservation;
+import com.papei.movie_ticket_reservations.repository.*;
 import com.papei.movie_ticket_reservations.service.HallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +21,12 @@ public class HallServiceImpl implements HallService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private ReservationRepository reservationRepository;
+
+    @Autowired
+    private DateRangeRepository dateRangeRepository;
 
     @Autowired
     private HallHourRepository hallHourRepository;
@@ -74,5 +79,20 @@ public class HallServiceImpl implements HallService {
     @Override
     public List<DateRange> getDateRangesPerHall(Long hallId) {
         return movieRepository.getDateRangesPerHall(hallId);
+    }
+
+    @Override
+    public DateRange updateDateRangePerHall(Long hallId, DateRange updatedDateRange) {
+        DateRange previousDateRange = dateRangeRepository.getReferenceById(updatedDateRange.getId());
+        List<Reservation> affectedReservations = reservationRepository.findBySelectedDateBetween(previousDateRange.getFromDate(), previousDateRange.getToDate());
+
+        if (!affectedReservations.isEmpty()) {
+            for (Reservation reservation : affectedReservations) {
+                reservationRepository.delete(reservation);
+            }
+        }
+
+        dateRangeRepository.save(updatedDateRange);
+        return null;
     }
 }

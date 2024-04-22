@@ -20,4 +20,6 @@ public interface HallService {
     public boolean deleteHall(Long hallId);
 
     public List<DateRange> getDateRangesPerHall(Long hallId);
+
+    public DateRange updateDateRangePerHall(Long hallId, DateRange updatedDateRange);
 }

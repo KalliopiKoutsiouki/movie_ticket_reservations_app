@@ -24,7 +24,7 @@ public class Reservation {
     private boolean email_sent;
 
     @Column(name = "SELECTED_DATE")
-    private String selectedDate;
+    private Date selectedDate;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
@@ -73,11 +73,11 @@ public class Reservation {
         this.user = user;
     }
 
-    public String getSelectedDate() {
+    public Date getSelectedDate() {
         return selectedDate;
     }
 
-    public void setSelectedDate(String selectedDate) {
+    public void setSelectedDate(Date selectedDate) {
         this.selectedDate = selectedDate;
     }
 
