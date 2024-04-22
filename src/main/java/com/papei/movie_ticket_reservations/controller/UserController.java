@@ -4,6 +4,9 @@ import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
 import com.papei.movie_ticket_reservations.model.Reservation;
 import com.papei.movie_ticket_reservations.model.User;
 import com.papei.movie_ticket_reservations.model.UserRole;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapper;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
+import com.papei.movie_ticket_reservations.pojo.dto.UserDto;
 import com.papei.movie_ticket_reservations.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,30 +62,32 @@ public class UserController {
     }
 
     @GetMapping({"/username/{userName}"})
-    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) {
+    public ResponseEntity<User> getUserByUserName(@PathVariable String userName) throws UserNotFoundException {
         try {
             User user = userService.getUserByUserName(userName).orElse(null);
             if (user != null) {
-                System.out.println(user.toString());
                 return ResponseEntity.ok(user);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new UserNotFoundException("User not found");
         }
+        return null;
     }
 
-    @PostMapping("/new")
+        @PostMapping("/new")
     public User addNewUser(@RequestBody User userInfo) {
         setRoleIfUndefined(userInfo);
         return userService.addUser(userInfo);
     }
 
     @PutMapping("/update/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDto updatedUser) {
+
+        System.out.println("USERNAME= " + updatedUser.getMobilePhone());
         try {
-            User user = userService.updateUser(userId, updatedUser);
+            ModelMapper mapper = ModelMapperFactory.createMapper(UserDto.class);
+            User userInfo = (User) mapper.mapModel(updatedUser);
+            User user = userService.updateUser(userId,userInfo);
             return ResponseEntity.ok("User updated successfully");
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

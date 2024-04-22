@@ -33,8 +33,8 @@ public class Reservation {
     @Column(name = "NUM_SEATS")
     private int numberOfSeats;
 
-    @OneToOne
-    @JoinColumn (name = "MOVIE_ID" , referencedColumnName = "id")
+    @ManyToOne
+    @JoinColumn(name = "MOVIE_ID")
     private Movie movie;
 
     @ManyToOne

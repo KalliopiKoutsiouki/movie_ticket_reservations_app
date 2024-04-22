@@ -19,11 +19,11 @@ insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (9, '2024-03-01', '2024-07
 insert into DATERANGE (ID, FROM_DATE, TO_DATE) values (10, '2024-06-29', '2024-08-16');
 
 -- HALL
-insert into HALL ( NAME) values ('Αίθουσα 1');
-insert into HALL ( NAME) values ( 'Αίθουσα 2');
-insert into HALL ( NAME) values ('Αίθουσα 3');
-insert into HALL ( NAME) values ( 'Αίθουσα 4');
-insert into HALL ( NAME) values ( 'Αίθουσα 5');
+insert into HALL ( NAME) values ('Aithousa 1');
+insert into HALL ( NAME) values ('Aithousa 2');
+insert into HALL ( NAME) values ('Aithousa 3');
+insert into HALL ( NAME) values ('Aithousa 4');
+insert into HALL ( NAME) values ('Aithousa 5');
 
 -- HOUR
 insert into HOURS ( FROM_HOUR, TO_HOUR) values ( '6:00 PM', '8:00 PM');

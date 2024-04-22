@@ -37,7 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Optional<Reservation> getReservationById(Long reservationId) {
+    public Optional<Reservation> getReservationById(Long reservationId) throws ReservationNotFoundException {
         return Optional.ofNullable(reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ReservationNotFoundException("Reservation with ID " + reservationId + " not found")));
     }
@@ -115,7 +115,7 @@ public class ReservationServiceImpl implements ReservationService {
 //    }
 
     @Override
-    public void deleteReservation(Long reservationId) {
+    public void deleteReservation(Long reservationId) throws ReservationNotFoundException {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
         if (!reservation.isPresent()) {
             throw new ReservationNotFoundException("Reservation with ID " + reservationId + " not found");

@@ -4,6 +4,7 @@ package com.papei.movie_ticket_reservations.controller;
 //import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 //import com.google.api.client.http.javanet.NetHttpTransport;
 //import com.google.api.client.json.gson.GsonFactory;
+import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
 import com.papei.movie_ticket_reservations.model.security.AuthRequest;
 import com.papei.movie_ticket_reservations.pojo.dto.TokenDto;
 import com.papei.movie_ticket_reservations.pojo.dto.UrlDto;
@@ -92,13 +93,14 @@ public class AuthController {
     }
 
     @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("invalid user request !");
-        }
+    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) throws UserNotFoundException {
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            if (authentication.isAuthenticated()) {
+                return jwtService.generateToken(authRequest.getUsername());
+            } else {
+                throw new UserNotFoundException("invalid user request !");
+            }
+
     }
 
 
