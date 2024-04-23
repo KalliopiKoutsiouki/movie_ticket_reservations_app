@@ -58,12 +58,9 @@ public class SecurityConfigs {
                         .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/v3/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/api/**")).permitAll()
-//                                .requestMatchers(new AntPathRequestMatcher("/movies/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/welcome")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users/new")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
                                 .requestMatchers(new AntPathRequestMatcher("/movies/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/hall/**")).permitAll()
 
                         .requestMatchers(new AntPathRequestMatcher("/auth/generateToken")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/url")).permitAll()
