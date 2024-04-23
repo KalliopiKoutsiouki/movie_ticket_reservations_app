@@ -71,7 +71,10 @@ public class SecurityConfigs {
 //                                .requestMatchers("/auth/user/**").authenticated()
 //                                .requestMatchers("/auth/admin/**").authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/users/delete/{userId}")).hasAnyRole("ADMIN", "SUPERADMIN")
-                        .anyRequest().authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/user/{userId}/role")).hasAnyRole("ADMIN", "SUPERADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/hall/dateRanges/{hallId}")).hasAnyRole("ADMIN", "SUPERADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/hall/update/{hallId}")).hasAnyRole("ADMIN", "SUPERADMIN")
+                              .anyRequest().authenticated()
 
                 );
 
