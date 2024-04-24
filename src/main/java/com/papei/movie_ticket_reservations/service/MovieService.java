@@ -14,4 +14,6 @@ public interface MovieService {
 
     public List<Movie> getUpcomingMovies();
 
+    public List<Movie> getPlayingNowMovies();
+
 }

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,5 +28,13 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query("SELECT d FROM DateRange d JOIN d.movie m WHERE m.hall.id = :hallId")
     List<DateRange> getDateRangesPerHall(Long hallId);
+
+    @Query("SELECT m FROM Movie m " +
+            "JOIN m.dateRange dr " +
+            "JOIN HallHour hh ON hh.hall.id = m.hall.id " +
+            "JOIN hh.hour h ON h.id = :hourId " +
+            "WHERE :currentDate BETWEEN dr.fromDate AND dr.toDate")
+    List<Movie> findNowMovies(@Param("currentDate") Date currentDate,
+                              @Param("hourId") Long hourId);
 
 }

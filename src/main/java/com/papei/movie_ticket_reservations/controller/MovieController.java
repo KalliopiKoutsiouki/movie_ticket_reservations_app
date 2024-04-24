@@ -44,6 +44,14 @@ public class MovieController {
         return currentMovieDtosList;
     }
 
+    @GetMapping({"/playing-now"})
+    public List<MovieDto> getPlayingNowMovies() {
+        List<Movie> nowMovies = this.movieService.getPlayingNowMovies();
+        List<MovieDto> nowMoviesDto = nowMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
+        return nowMoviesDto;
+    }
+
+
     @GetMapping({"/upcomingMovies"})
     public List<MovieDto> getUpcomingMovies() {
         List<Movie> upcomingMovies = this.movieService.getUpcomingMovies();

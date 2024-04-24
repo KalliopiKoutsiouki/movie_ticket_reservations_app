@@ -2,6 +2,7 @@ package com.papei.movie_ticket_reservations.controller;
 
 import com.papei.movie_ticket_reservations.exception.ReservationNotFoundException;
 import com.papei.movie_ticket_reservations.model.Reservation;
+import com.papei.movie_ticket_reservations.model.User;
 import com.papei.movie_ticket_reservations.service.ReservationService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class ReservationController {
         }
     }
 
+    @GetMapping({"/checking-in/{movieId}"})
+    public List<User> usersForCheckin (@PathVariable Long movieId) {
+        return reservationService.getUsersWithTodayReservations(movieId);
+    }
     @PostMapping("/new")
     public Reservation createReservation(@RequestBody Reservation reservationInfo) {
         return reservationService.addReservation(reservationInfo);
