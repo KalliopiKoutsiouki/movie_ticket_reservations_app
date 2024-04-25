@@ -40,8 +40,8 @@ public class ReservationController {
     }
 
     @GetMapping({"/checking-in/{movieId}"})
-    public List<User> usersForCheckin (@PathVariable Long movieId) {
-        return reservationService.getUsersWithTodayReservations(movieId);
+    public List<Reservation> reservationsForCheckin (@PathVariable Long movieId) {
+        return reservationService.getTodayReservations(movieId);
     }
     @PostMapping("/new")
     public Reservation createReservation(@RequestBody Reservation reservationInfo) {
@@ -50,8 +50,12 @@ public class ReservationController {
 
     @PostMapping("/update")
     public Reservation updateReservation(@RequestBody Reservation reservationInfo) {
-
         return reservationService.updateReservation(reservationInfo);
+    }
+
+    @PostMapping("/checkinReservation")
+    public void checkinReservation(@RequestBody Reservation reservationInfo) {
+        reservationService.checkinReservation(reservationInfo);
     }
 
 

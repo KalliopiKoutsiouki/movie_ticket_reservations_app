@@ -14,12 +14,23 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     public List<Reservation> findBySelectedDateBetween(Date fromDate, Date toDate);
 
-    @Query("SELECT r.user FROM Reservation r WHERE r.hour.id = :hourId " +
+//    @Query("SELECT r.user FROM Reservation r WHERE r.hour.id = :hourId " +
+//            "AND r.movie.id = :movieId " +
+//            "AND YEAR(r.selectedDate) = YEAR(:today) " +
+//            "AND MONTH(r.selectedDate) = MONTH(:today) " +
+//            "AND DAY(r.selectedDate) = DAY(:today)")
+//    List<User> findUsersByHourIdAndMovieIdAndSelectedDate(
+//            @Param("hourId") Long hourId,
+//            @Param("movieId") Long movieId,
+//            @Param("today") Date today
+//    );
+
+    @Query("SELECT r FROM Reservation r WHERE r.hour.id = :hourId " +
             "AND r.movie.id = :movieId " +
             "AND YEAR(r.selectedDate) = YEAR(:today) " +
             "AND MONTH(r.selectedDate) = MONTH(:today) " +
             "AND DAY(r.selectedDate) = DAY(:today)")
-    List<User> findUsersByHourIdAndMovieIdAndSelectedDate(
+    List<Reservation> findReservationsByHourIdAndMovieIdAndSelectedDate(
             @Param("hourId") Long hourId,
             @Param("movieId") Long movieId,
             @Param("today") Date today

@@ -20,7 +20,8 @@ public interface ReservationService {
 
     Reservation updateReservation(Reservation reservationInfo);
 
-    List<User> getUsersWithTodayReservations(Long movieId);
+    List<Reservation> getTodayReservations(Long movieId);
 
+    void checkinReservation(Reservation reservation);
     public void deleteReservation(Long reservationId) throws ReservationNotFoundException;
 }

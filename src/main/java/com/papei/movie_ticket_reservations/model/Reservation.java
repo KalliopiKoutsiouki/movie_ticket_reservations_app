@@ -40,6 +40,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "HOUR_ID")
     private Hour hour;
+    @Column(name = "CHECKED")
+    private boolean checked;
 
     public void setId(Long id) {
         this.id = id;
@@ -113,5 +115,11 @@ public class Reservation {
         this.numberOfSeats = numberOfSeats;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 }

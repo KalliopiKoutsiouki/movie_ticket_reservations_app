@@ -55,6 +55,14 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.save(reservationInfo);
     }
 
+
+    @Override
+    public void checkinReservation(Reservation reservationInfo) {
+        reservationRepository.save(reservationInfo);
+    }
+
+
+
     @Override
     public Reservation updateReservation(Reservation reservationInfo) {
         checkAndRevertHallCapacity(reservationInfo);
@@ -65,16 +73,16 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<User> getUsersWithTodayReservations(Long movieId) {
-//        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to the current date
-        Date tomorrow = calendar.getTime();
+    public List<Reservation> getTodayReservations(Long movieId) {
+        Date currentDate = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to the current date
+//        Date tomorrow = calendar.getTime();
         LocalTime currentHour = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
         String currentHourString = currentHour.format(formatter);
         Long hourId = hourRepository.findHourIdByCurrentHour(currentHourString);
-        return reservationRepository.findUsersByHourIdAndMovieIdAndSelectedDate(hourId,movieId, tomorrow);
+        return reservationRepository.findReservationsByHourIdAndMovieIdAndSelectedDate(hourId,movieId, currentDate);
     }
 
     private void checkAndRevertHallCapacity(Reservation reservationInfo) {

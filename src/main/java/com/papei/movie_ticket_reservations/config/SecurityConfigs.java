@@ -70,6 +70,7 @@ public class SecurityConfigs {
 
 //                                .requestMatchers("/auth/user/**").authenticated()
 //                                .requestMatchers("/auth/admin/**").authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/reservation/checkinReservation")).hasRole("CHECKER")
                         .requestMatchers(new AntPathRequestMatcher("/users/delete/{userId}")).hasAnyRole("ADMIN", "SUPERADMIN")
                                 .requestMatchers(new AntPathRequestMatcher("/user/{userId}/role")).hasAnyRole("ADMIN", "SUPERADMIN")
                                 .requestMatchers(new AntPathRequestMatcher("/hall/dateRanges/{hallId}")).hasAnyRole("ADMIN", "SUPERADMIN")
