@@ -1,14 +1,20 @@
 package com.papei.movie_ticket_reservations.controller;
 
+import com.papei.movie_ticket_reservations.exception.HallHourNotFoundException;
+import com.papei.movie_ticket_reservations.exception.UserNotFoundException;
+import com.papei.movie_ticket_reservations.model.Hall;
 import com.papei.movie_ticket_reservations.model.HallHour;
 import com.papei.movie_ticket_reservations.model.Hour;
+import com.papei.movie_ticket_reservations.model.User;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapper;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
+import com.papei.movie_ticket_reservations.pojo.dto.UserDto;
 import com.papei.movie_ticket_reservations.service.HallHourService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +31,14 @@ public class HallHourController {
         return this.hallHourService.getHoursByHallId(hallId);
     }
 
+    @PutMapping("/update/{hallHourId}")
+    public ResponseEntity<String> updateHallHour(@PathVariable Long hallHourId, @RequestBody HallHour updatedHallHour) {
+        try {
+            HallHour hallHour = hallHourService.updateHallHour(hallHourId, updatedHallHour);
+            return ResponseEntity.ok("HallHour updated successfully");
+        } catch (HallHourNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
 }

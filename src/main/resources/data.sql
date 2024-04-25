@@ -3,7 +3,7 @@ insert into USERS (EMAIL, FIRST_NAME, LAST_NAME, USER_NAME, PASSWORD) values ('e
 insert into USERS (EMAIL, FIRST_NAME, LAST_NAME, USER_NAME, PASSWORD) values ('oplaunch1@multiply.com', 'Otho', 'Plaunch', 'test2', '$2a$10$lW1Qj4Aw0ZOL2R6A1MCgDOye4UhdjNNgeGjCo0PDGevHsWQp9PNse');
 insert into USERS (EMAIL, FIRST_NAME, LAST_NAME, USER_NAME, PASSWORD) values ('randomMail@random.com', 'Titto', 'Tatta', 'titoUser', '$2a$10$zT4nGHtzYV5l5FBpo72LleBAUlz6nue.G1OzzzEDm2inRWKZmeySK');
 -- USER_ROLES
-insert into USER_ROLES (USER_ID, USERROLES) values (1, 'ROLE_USER');
+insert into USER_ROLES (USER_ID, USERROLES) values (1, 'ROLE_ADMIN');
 insert into USER_ROLES (USER_ID, USERROLES) values (2, 'ROLE_USER');
 insert into USER_ROLES (USER_ID, USERROLES) values (3, 'ROLE_CHECKER');
 

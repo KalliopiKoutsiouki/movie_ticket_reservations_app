@@ -10,4 +10,6 @@ import java.util.List;
 public interface HallHourService {
 
     List<HallHour> getHoursByHallId(Long id);
+
+    HallHour updateHallHour(Long hallHourId, HallHour updatedHallHour);
 }
