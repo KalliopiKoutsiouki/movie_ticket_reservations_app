@@ -25,13 +25,13 @@ public class HallHourServiceImpl implements HallHourService {
 
     @Override
     public HallHour updateHallHour(Long hallHourId, HallHour updatedHallHour) {
-        HallHour existingHallHour = hallHourRepository.findById(hallHourId)
-                .orElseThrow(() -> new HallHourNotFoundException("HallHour with ID " + hallHourId + " not found"));
+//        HallHour existingHallHour = hallHourRepository.findById(hallHourId)
+//                .orElseThrow(() -> new HallHourNotFoundException("HallHour with ID " + hallHourId + " not found"));
+//
+//        existingHallHour.setHall(updatedHallHour.getHall());
+//        existingHallHour.setHour(updatedHallHour.getHour());
+//        existingHallHour.setCapacity(updatedHallHour.getCapacity());
 
-        existingHallHour.setHall(updatedHallHour.getHall());
-        existingHallHour.setHour(updatedHallHour.getHour());
-        existingHallHour.setCapacity(updatedHallHour.getCapacity());
-
-        return hallHourRepository.save(existingHallHour);
+        return hallHourRepository.save(updatedHallHour);
     }
 }
