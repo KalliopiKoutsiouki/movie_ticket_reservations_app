@@ -57,12 +57,12 @@ public class HallController {
     }
 
     @DeleteMapping("/delete/{hallId}")
-    public ResponseEntity<String> deleteHall(@PathVariable Long hallId) {
+    public void deleteHall(@PathVariable Long hallId) {
         try {
             hallService.deleteHall(hallId);
-            return ResponseEntity.ok("Hall deleted successfully");
+
         } catch (HallNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            throw new RuntimeException();
         }
     }
 
