@@ -49,15 +49,10 @@ public class HallServiceImpl implements HallService {
 
     @Override
     public Hall updateHall(Long hallId, Hall updatedHall) {
-        Hall existingHall = hallRepository.findById(hallId)
+        hallRepository.findById(hallId)
                 .orElseThrow(() -> new HallNotFoundException("Hall with ID " + hallId + " not found"));
 
-        existingHall.setName(updatedHall.getName());
-//        existingHall.setPicture(updatedHall.getPicture());
-        existingHall.setMovie(updatedHall.getMovie());
-        existingHall.setHours(updatedHall.getHours());
-
-        return hallRepository.save(existingHall);
+        return hallRepository.save(updatedHall);
     }
 
     public boolean deleteHall(Long hallId) {
