@@ -8,6 +8,7 @@ import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
 import com.papei.movie_ticket_reservations.model.mapper.impl.MovieDtoMapper;
 import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.service.MovieService;
+import com.papei.movie_ticket_reservations.service.fuzzy.FuzzyMovieService;
 import com.papei.movie_ticket_reservations.service.impl.MovieServiceImpl;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,29 +27,31 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
-    private ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
+    @Autowired
+    FuzzyMovieService fuzzyMovieService;
+
+    private final ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
 
 
 
     @GetMapping({"/all"})
     public List<MovieDto> getAllMovies() {
         List<Movie> movies = this.movieService.getAllMovies();
-        List<MovieDto> movieDtosList = movies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
-        return movieDtosList;
+        return movies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
     }
 
     @GetMapping({"/currentMovies"})
     public List<MovieDto> getCurrentMovies() {
+        fuzzyMovieService.getMovieRecommendationsSorted(7L);
         List<Movie> currentMovies = this.movieService.getCurrentMovies();
-        List<MovieDto> currentMovieDtosList = currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
-        return currentMovieDtosList;
+        return currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
     }
 
     @GetMapping({"/playing-now"})
     public List<MovieDto> getPlayingNowMovies() {
+
         List<Movie> nowMovies = this.movieService.getPlayingNowMovies();
-        List<MovieDto> nowMoviesDto = nowMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
-        return nowMoviesDto;
+        return nowMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
     }
 
 

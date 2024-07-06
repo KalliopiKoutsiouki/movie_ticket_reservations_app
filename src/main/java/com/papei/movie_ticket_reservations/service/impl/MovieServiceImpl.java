@@ -41,9 +41,6 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> getPlayingNowMovies() {
         Date currentDate = new Date();
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to the current date
-//        Date tomorrow = calendar.getTime();
         LocalTime currentHour = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
         String currentHourString = currentHour.format(formatter);
