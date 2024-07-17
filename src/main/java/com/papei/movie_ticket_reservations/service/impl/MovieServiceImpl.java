@@ -1,6 +1,9 @@
 package com.papei.movie_ticket_reservations.service.impl;
 
 import com.papei.movie_ticket_reservations.model.Movie;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapper;
+import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
+import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.repository.HourRepository;
 import com.papei.movie_ticket_reservations.repository.MovieRepository;
 import com.papei.movie_ticket_reservations.service.MovieService;
@@ -10,9 +13,10 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Service
 public class MovieServiceImpl implements MovieService {
 
@@ -21,6 +25,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private HourRepository hourRepository;
+
+    private final ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
@@ -47,8 +53,5 @@ public class MovieServiceImpl implements MovieService {
         Long hourId = hourRepository.findHourIdByCurrentHour(currentHourString);
         return movieRepository.findNowMovies(currentDate, hourId);
     }
-
-
-
 
 }

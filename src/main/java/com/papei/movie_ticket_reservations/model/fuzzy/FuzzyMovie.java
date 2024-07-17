@@ -1,20 +1,21 @@
 package com.papei.movie_ticket_reservations.model.fuzzy;
 
 import com.papei.movie_ticket_reservations.model.Movie;
+import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 
 public class FuzzyMovie {
-    private Movie movie;
+    private MovieDto movieDto;
     private double genreSimilarity;
     private double popularitySimilarity;
     private double releaseYearSimilarity;
     private double recommendationConfidence;
 
-    public Movie getMovie() {
-        return movie;
+    public MovieDto getMovieDto() {
+        return movieDto;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovieDto(MovieDto movie) {
+        this.movieDto = movie;
     }
 
     public double getGenreSimilarity() {

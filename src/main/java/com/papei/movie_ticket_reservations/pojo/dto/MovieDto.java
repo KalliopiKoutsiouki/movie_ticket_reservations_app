@@ -13,6 +13,7 @@ public class MovieDto {
     private String picture;
     private Hall hall;
     private DateRange dateRange;
+    private Double recommendationRateForUser;
 
     public Long getId() {
         return id;
@@ -48,6 +49,14 @@ public class MovieDto {
 
     public Hall getHall() {
         return hall;
+    }
+
+    public Double getRecommendationRateForUser() {
+        return recommendationRateForUser;
+    }
+
+    public void setRecommendationRateForUser(Double recommendationRateForUser) {
+        this.recommendationRateForUser = recommendationRateForUser;
     }
 
     public void setHall(Hall hall) {

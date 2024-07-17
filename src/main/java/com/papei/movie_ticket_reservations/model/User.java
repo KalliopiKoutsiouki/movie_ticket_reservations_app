@@ -41,6 +41,7 @@ public class User {
     @NotNull(message = "Email is mandatory")
     private String email;
 
+
     @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "USER_ID"))
     @Enumerated(EnumType.STRING)

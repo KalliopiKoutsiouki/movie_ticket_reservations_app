@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @SecurityRequirement(name = "Authorization")
@@ -32,8 +36,6 @@ public class MovieController {
 
     private final ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
 
-
-
     @GetMapping({"/all"})
     public List<MovieDto> getAllMovies() {
         List<Movie> movies = this.movieService.getAllMovies();
@@ -42,26 +44,21 @@ public class MovieController {
 
     @GetMapping({"/currentMovies"})
     public List<MovieDto> getCurrentMovies() {
-        // fere to user kai ti selected movie
-        List<Movie> recommendations = fuzzyMovieService.getMovieRecommendationsSorted(12L);
-
         List<Movie> currentMovies = this.movieService.getCurrentMovies();
-        return currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
+        List<MovieDto> personalizedCurrentMovies = fuzzyMovieService.getMovieRecommendationsSorted(currentMovies, 12L);
+        return personalizedCurrentMovies;
     }
 
     @GetMapping({"/playing-now"})
     public List<MovieDto> getPlayingNowMovies() {
-
         List<Movie> nowMovies = this.movieService.getPlayingNowMovies();
         return nowMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
     }
 
-
     @GetMapping({"/upcomingMovies"})
     public List<MovieDto> getUpcomingMovies() {
-        List<Movie> upcomingMovies = this.movieService.getUpcomingMovies();
-        List<MovieDto> upcomingMoviesDtoList = upcomingMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
-        System.out.println(upcomingMoviesDtoList);
-        return upcomingMoviesDtoList;
+          List<Movie> upcomingMovies = this.movieService.getUpcomingMovies();
+          List<MovieDto> personalizedUpcomingMovies = this.fuzzyMovieService.getMovieRecommendationsSorted(upcomingMovies, 12L);
+          return personalizedUpcomingMovies;
     }
 }

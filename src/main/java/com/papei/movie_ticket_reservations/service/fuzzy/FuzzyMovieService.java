@@ -4,6 +4,8 @@ import com.google.common.collect.Sets;
 import com.papei.movie_ticket_reservations.model.Genre;
 import com.papei.movie_ticket_reservations.model.Movie;
 import com.papei.movie_ticket_reservations.model.fuzzy.FuzzyMovie;
+import com.papei.movie_ticket_reservations.model.mapper.impl.MovieDtoMapper;
+import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.repository.MovieRepository;
 import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
@@ -28,23 +30,19 @@ public class FuzzyMovieService {
         this.movieRepository = movieRepository;
     }
 
-    public List<Movie> getMovieRecommendationsSorted(Long movieId) {
+    public List<MovieDto> getMovieRecommendationsSorted(List<Movie> movieSet, Long movieId) {
         Movie selectedMovie = movieRepository.findById(movieId).orElse(null);
         if (selectedMovie == null) {
             return Collections.emptyList();
         }
-        List<Movie> allMovies = movieRepository.findAll();
-
-        List<FuzzyMovie> fuzzyMovies = allMovies.stream()
+        List<FuzzyMovie> fuzzyMovies = movieSet.stream()
                 .map(movie -> calculateFuzzyVariables(selectedMovie, movie))
                 .toList();
-
         fuzzyMovies.forEach(this::evaluateFuzzyRules);
         List<FuzzyMovie> sorted = fuzzyMovies.stream()
                 .sorted(Comparator.comparingDouble(FuzzyMovie::getRecommendationConfidence).reversed()).toList();
         return  sorted.stream()
-                .map(FuzzyMovie::getMovie)
-                .limit(10)
+                .map(FuzzyMovie::getMovieDto)
                 .toList();
     }
 
@@ -66,11 +64,12 @@ public class FuzzyMovieService {
 
         double recommendationConfidence = fb.getVariable(RECOMMENDATION_CONFIDENCE).getValue();
         fuzzyMovie.setRecommendationConfidence(recommendationConfidence);
+        fuzzyMovie.getMovieDto().setRecommendationRateForUser(recommendationConfidence);
     }
 
     private FuzzyMovie calculateFuzzyVariables(Movie selectedMovie, Movie movie) {
         FuzzyMovie fuzzyMovie = new FuzzyMovie();
-        fuzzyMovie.setMovie(movie);
+        fuzzyMovie.setMovieDto(new MovieDtoMapper().mapModel(movie));
         fuzzyMovie.setGenreSimilarity(calculateGenreSimilarity(selectedMovie, movie));
         fuzzyMovie.setPopularitySimilarity(calculatePopularitySimilarity(selectedMovie, movie));
         fuzzyMovie.setReleaseYearSimilarity(calculateReleaseYearSimilarity(selectedMovie,movie));
