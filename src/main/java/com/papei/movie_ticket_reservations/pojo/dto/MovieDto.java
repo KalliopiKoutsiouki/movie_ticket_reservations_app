@@ -3,6 +3,8 @@ package com.papei.movie_ticket_reservations.pojo.dto;
 import com.papei.movie_ticket_reservations.model.DateRange;
 import com.papei.movie_ticket_reservations.model.Hall;
 
+import java.util.Set;
+
 public class MovieDto {
 
     private Long id;

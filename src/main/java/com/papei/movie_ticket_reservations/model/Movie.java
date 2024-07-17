@@ -1,8 +1,8 @@
 package com.papei.movie_ticket_reservations.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,12 +18,23 @@ public class Movie {
     private String description;
     @Column(name = "PICTURE_URL")
     private String pictureUrl;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "HALL_ID", referencedColumnName = "id")
     private Hall hall;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "DATERANGE_ID", referencedColumnName = "id")
     private DateRange dateRange;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie")
+    private Set<HallHour> hallHours;
+
+
+    //    @OneToOne
+//    @JoinColumn(name = "DATERANGE_ID", referencedColumnName = "id")
+//    private DateRange dateRange;
     @ElementCollection(targetClass = Genre.class)
     @CollectionTable(name = "MOVIE_GENRE", joinColumns = @JoinColumn(name = "MOVIE_ID"))
     @Enumerated(EnumType.STRING)
@@ -31,8 +42,8 @@ public class Movie {
     private Set<Genre> genre;
     @Column(name = "POPULARITY")
     private double popularity;
-    @Column(name = "DIRECTOR")
-    private String director;
+    @Column(name = "AGE_RATING")
+    private int ageRating;
     @Column(name = "RELEASE_YEAR")
     private int releaseYear;
     //    @OneToMany(mappedBy = "movie")
@@ -86,6 +97,14 @@ public class Movie {
         this.dateRange = dateRange;
     }
 
+    public Set<HallHour> getHallHours() {
+        return hallHours;
+    }
+
+    public void setHallHours(Set<HallHour> hallHours) {
+        this.hallHours = hallHours;
+    }
+
     public Set<Genre> getGenre() {
         return genre;
     }
@@ -102,12 +121,12 @@ public class Movie {
         this.popularity = popularity;
     }
 
-    public String getDirector() {
-        return director;
+    public int getAgeRating() {
+        return ageRating;
     }
 
-    public void setDirector(String director) {
-        this.director = director;
+    public void setAgeRating(int age_rating) {
+        this.ageRating = age_rating;
     }
 
     public int getReleaseYear() {

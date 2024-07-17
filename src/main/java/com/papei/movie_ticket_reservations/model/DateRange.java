@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "DATERANGE")
@@ -14,16 +15,16 @@ public class DateRange {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @JsonFormat(pattern = "d/MM/yyyy")
+    //    @JsonFormat(pattern = "d/MM/yyyy")
     @Column(name = "FROM_DATE")
     private Date fromDate;
-//    @JsonFormat(pattern = "d/MM/yyyy")
+    //    @JsonFormat(pattern = "d/MM/yyyy")
     @Column(name = "TO_DATE")
     private Date toDate;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "dateRange")
-    private Movie movie;
+    @OneToMany(mappedBy = "dateRange")
+    private Set<Movie> movies;
 
     public Long getId() {
         return id;
@@ -49,12 +50,19 @@ public class DateRange {
         this.toDate = toDate;
     }
 
-    public Movie getMovie() {
-        return movie;
+//    public Movie getMovie() {
+//        return movie;
+//    }
+//
+//    public void setMovie(Movie movie) {
+//        this.movie = movie;
+//    }
+
+    public Set<Movie> getMovies() {
+        return movies;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
-
 }

@@ -42,7 +42,9 @@ public class MovieController {
 
     @GetMapping({"/currentMovies"})
     public List<MovieDto> getCurrentMovies() {
-        fuzzyMovieService.getMovieRecommendationsSorted(7L);
+        // fere to user kai ti selected movie
+        List<Movie> recommendations = fuzzyMovieService.getMovieRecommendationsSorted(12L);
+
         List<Movie> currentMovies = this.movieService.getCurrentMovies();
         return currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList();
     }

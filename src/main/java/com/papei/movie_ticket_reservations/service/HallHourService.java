@@ -11,5 +11,7 @@ public interface HallHourService {
 
     List<HallHour> getHoursByHallId(Long id);
 
+    List<HallHour> getHoursByHallIdAndMovieId(Long hallId, Long movieId);
+
     HallHour updateHallHour(Long hallHourId, HallHour updatedHallHour);
 }

@@ -26,7 +26,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT m FROM Movie m WHERE m.hall.id = :hallId")
     List<Movie> findMoviesOfHall(Long hallId);
 
-    @Query("SELECT d FROM DateRange d JOIN d.movie m WHERE m.hall.id = :hallId")
+    @Query("SELECT d FROM DateRange d JOIN d.movies m WHERE m.hall.id = :hallId")
     List<DateRange> getDateRangesPerHall(Long hallId);
 
     @Query("SELECT m FROM Movie m " +

@@ -16,12 +16,9 @@ public class Hall {
     @Column(name = "NAME")
     private String name;
 
-//    @Lob
-//    private byte[] picture;
     @JsonIgnore
-    @OneToOne(mappedBy = "hall")
-    private Movie movie;
-
+    @OneToMany(mappedBy = "hall")
+    private Set<Movie> movies;
 
     @ManyToMany
     @JoinTable(
@@ -47,20 +44,20 @@ public class Hall {
         this.name = code;
     }
 
-//    public byte[] getPicture() {
-//        return picture;
+//    public Movie getMovie() {
+//        return movie;
 //    }
 //
-//    public void setPicture(byte[] picture) {
-//        this.picture = picture;
+//    public void setMovie(Movie movie) {
+//        this.movie = movie;
 //    }
 
-    public Movie getMovie() {
-        return movie;
+    public Set<Movie> getMovies() {
+        return movies;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 
     public Set<Hour> getHours() {

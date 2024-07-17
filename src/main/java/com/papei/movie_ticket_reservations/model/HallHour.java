@@ -17,6 +17,9 @@ public class HallHour {
     @JoinColumn(name = "HOUR_ID")
     private Hour hour;
 
+    @ManyToOne
+    @JoinColumn(name = "MOVIE_ID", referencedColumnName = "id")
+    private Movie movie;
     @Column(name = "CAPACITY")
     private int capacity;
 
@@ -29,6 +32,14 @@ public class HallHour {
 
     public HallHour() {
 
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     public Long getId() {

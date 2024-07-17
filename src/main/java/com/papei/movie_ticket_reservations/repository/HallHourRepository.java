@@ -18,6 +18,9 @@ public interface HallHourRepository extends JpaRepository<HallHour, Long> {
     @Query("SELECT hh FROM HallHour hh WHERE hh.hall.id = :hallId")
     List<HallHour> getHoursByHallId(@Param("hallId") Long id);
 
+    @Query("SELECT hh FROM HallHour hh WHERE hh.hall.id = :hallId and hh.movie.id = :movieId")
+    List<HallHour> getHoursByHallIdAndMovieId(@Param("hallId") Long hallId, @Param("movieId") Long movieId );
+
     HallHour getHallHoursByHallAndHour(Hall hall, Hour hour);
 
     @Transactional

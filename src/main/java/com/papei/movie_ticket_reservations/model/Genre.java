@@ -8,6 +8,15 @@ public enum Genre {
     SCIENCE_FICTION,
     DRAMA,
     ACTION,
-    ROMANCE
+    ROMANCE,
+    ANIMATION,
+    FAMILY,
+    BIOGRAPHY,
+    THRILLER,
+    FANTASY,
+    ADVENTURE,
+    CRIME
+
+
 
 }

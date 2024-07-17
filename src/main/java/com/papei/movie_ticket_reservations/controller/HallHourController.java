@@ -26,10 +26,16 @@ public class HallHourController {
     @Autowired
     private HallHourService hallHourService;
 
+    @GetMapping({"/all/{hallId}/{movieId}"})
+    public List<HallHour> getHoursByHallIdAndMovieId(@PathVariable Long hallId, @PathVariable Long movieId) {
+        return this.hallHourService.getHoursByHallIdAndMovieId(hallId,movieId);
+    }
+
     @GetMapping({"/all/{hallId}"})
     public List<HallHour> getHoursByHallId(@PathVariable Long hallId) {
         return this.hallHourService.getHoursByHallId(hallId);
     }
+
 
     @PutMapping("/update/{hallHourId}")
     public ResponseEntity<String> updateHallHour(@PathVariable Long hallHourId, @RequestBody HallHour updatedHallHour) {

@@ -5,9 +5,8 @@ import com.papei.movie_ticket_reservations.model.Movie;
 public class FuzzyMovie {
     private Movie movie;
     private double genreSimilarity;
-    private double popularity;
-    private double directorPreference;
-    private double releaseYearScore;
+    private double popularitySimilarity;
+    private double releaseYearSimilarity;
     private double recommendationConfidence;
 
     public Movie getMovie() {
@@ -26,28 +25,20 @@ public class FuzzyMovie {
         this.genreSimilarity = genreSimilarity;
     }
 
-    public double getPopularity() {
-        return popularity;
+    public double getPopularitySimilarity() {
+        return popularitySimilarity;
     }
 
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
+    public void setPopularitySimilarity(double popularitySimilarity) {
+        this.popularitySimilarity = popularitySimilarity;
     }
 
-    public double getDirectorPreference() {
-        return directorPreference;
+    public double getReleaseYearSimilarity() {
+        return releaseYearSimilarity;
     }
 
-    public void setDirectorPreference(double directorPreference) {
-        this.directorPreference = directorPreference;
-    }
-
-    public double getReleaseYearScore() {
-        return releaseYearScore;
-    }
-
-    public void setReleaseYearScore(double releaseYearScore) {
-        this.releaseYearScore = releaseYearScore;
+    public void setReleaseYearSimilarity(double releaseYearSimilarity) {
+        this.releaseYearSimilarity = releaseYearSimilarity;
     }
 
     public double getRecommendationConfidence() {

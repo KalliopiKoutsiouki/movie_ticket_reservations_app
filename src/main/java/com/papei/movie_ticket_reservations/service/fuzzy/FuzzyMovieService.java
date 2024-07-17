@@ -9,13 +9,20 @@ import net.sourceforge.jFuzzyLogic.FIS;
 import net.sourceforge.jFuzzyLogic.FunctionBlock;
 import org.springframework.stereotype.Service;
 
-import java.time.Year;
 import java.util.*;
 
 @Service
 public class FuzzyMovieService {
 
+    private static final String FUZZY_RULES_FILE = "src/main/resources/movie_recommendation.fcl";
+    private static final String FUNCTION_BLOCK_FUNCTION= "movie_recommendation";
+    private static final String GENRE_SIMILARITY = "genreSimilarity";
+    private static final String POPULARITY_SIMILARITY = "popularitySimilarity";
+    private static final String RELEASE_YEAR_SIMILARITY = "releaseYearSimilarity";
+    private static final String RECOMMENDATION_CONFIDENCE = "recommendationConfidence";
+    private static final int MAX_YEAR_DIFFERENCE = 5;
     private final MovieRepository movieRepository;
+
 
     public FuzzyMovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -33,34 +40,31 @@ public class FuzzyMovieService {
                 .toList();
 
         fuzzyMovies.forEach(this::evaluateFuzzyRules);
-
-        List<Movie> sortedMovies = fuzzyMovies.stream()
-                .sorted(Comparator.comparingDouble(FuzzyMovie::getRecommendationConfidence).reversed())
+        List<FuzzyMovie> sorted = fuzzyMovies.stream()
+                .sorted(Comparator.comparingDouble(FuzzyMovie::getRecommendationConfidence).reversed()).toList();
+        return  sorted.stream()
                 .map(FuzzyMovie::getMovie)
                 .limit(10)
                 .toList();
-
-        return sortedMovies;
     }
 
     private void evaluateFuzzyRules(FuzzyMovie fuzzyMovie) {
-        String filename = "src/main/resources/movie_recommendation.fcl";
+        String filename = FUZZY_RULES_FILE;
         FIS fis = FIS.load(filename, true);
         if (fis == null) {
             System.err.println("Can't load file: " + filename);
             return;
         }
-        FunctionBlock fb = fis.getFunctionBlock("movie_recommendation");
+        FunctionBlock fb = fis.getFunctionBlock(FUNCTION_BLOCK_FUNCTION);
 
-        fb.setVariable("genreSimilarity", fuzzyMovie.getGenreSimilarity());
-        fb.setVariable("popularitySimilarity", fuzzyMovie.getPopularity());
-        fb.setVariable("directorSimilarity", fuzzyMovie.getDirectorPreference());
-        fb.setVariable("releaseYearSimilarity", fuzzyMovie.getReleaseYearScore());
+        fb.setVariable(GENRE_SIMILARITY, fuzzyMovie.getGenreSimilarity());
+        fb.setVariable(POPULARITY_SIMILARITY, fuzzyMovie.getPopularitySimilarity());
+        fb.setVariable(RELEASE_YEAR_SIMILARITY, fuzzyMovie.getReleaseYearSimilarity());
 
         // Evaluate
         fb.evaluate();
 
-        double recommendationConfidence = fb.getVariable("recommendationConfidence").getValue();
+        double recommendationConfidence = fb.getVariable(RECOMMENDATION_CONFIDENCE).getValue();
         fuzzyMovie.setRecommendationConfidence(recommendationConfidence);
     }
 
@@ -68,9 +72,8 @@ public class FuzzyMovieService {
         FuzzyMovie fuzzyMovie = new FuzzyMovie();
         fuzzyMovie.setMovie(movie);
         fuzzyMovie.setGenreSimilarity(calculateGenreSimilarity(selectedMovie, movie));
-        fuzzyMovie.setPopularity(calculatePopularitySimilarity(selectedMovie, movie));
-        fuzzyMovie.setDirectorPreference(calculateDirectorSimilarity(selectedMovie, movie));
-        fuzzyMovie.setReleaseYearScore(calculateReleaseYearSimilarity(selectedMovie,movie));
+        fuzzyMovie.setPopularitySimilarity(calculatePopularitySimilarity(selectedMovie, movie));
+        fuzzyMovie.setReleaseYearSimilarity(calculateReleaseYearSimilarity(selectedMovie,movie));
 
         return fuzzyMovie;
     }
@@ -87,15 +90,10 @@ public class FuzzyMovieService {
         return 10 - diff;
     }
 
-    private double calculateDirectorSimilarity(Movie selectedMovie, Movie movie) {
-        return selectedMovie.getDirector().equals(movie.getDirector()) ? 10 : 0;
-    }
-
     private double calculateReleaseYearSimilarity(Movie selectedMovie, Movie movie) {
         // Maximum difference for similarity
-        int maxYearDifference = 5;
         int yearDifference = Math.abs(selectedMovie.getReleaseYear() - movie.getReleaseYear());
-        double normalizedDifference = (double) yearDifference / maxYearDifference;
+        double normalizedDifference = (double) yearDifference / MAX_YEAR_DIFFERENCE;
         double similarity = 10 - normalizedDifference * 10;
         return Math.max(0, similarity);
     }

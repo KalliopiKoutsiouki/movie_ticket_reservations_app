@@ -8,11 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
-import java.util.Objects;
 
 
 public class MovieDtoMapper implements ModelMapper<Movie,MovieDto > {

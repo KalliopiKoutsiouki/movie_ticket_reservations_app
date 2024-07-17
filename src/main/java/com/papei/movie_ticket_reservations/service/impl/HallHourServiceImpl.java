@@ -24,6 +24,11 @@ public class HallHourServiceImpl implements HallHourService {
     }
 
     @Override
+    public List<HallHour> getHoursByHallIdAndMovieId(Long hallId, Long movieId) {
+        return this.hallHourRepository.getHoursByHallIdAndMovieId(hallId,movieId);
+    }
+
+    @Override
     public HallHour updateHallHour(Long hallHourId, HallHour updatedHallHour) {
 //        HallHour existingHallHour = hallHourRepository.findById(hallHourId)
 //                .orElseThrow(() -> new HallHourNotFoundException("HallHour with ID " + hallHourId + " not found"));
