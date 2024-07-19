@@ -14,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @SecurityRequirement(name = "Authorization")
@@ -74,7 +71,7 @@ public class UserController {
         return null;
     }
 
-        @PostMapping("/new")
+    @PostMapping("/new")
     public User addNewUser(@RequestBody User userInfo) {
         setRoleIfUndefined(userInfo);
         return userService.addUser(userInfo);
@@ -84,10 +81,20 @@ public class UserController {
     public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody UserDto updatedUser) {
 
         System.out.println("USERNAME= " + updatedUser.getMobilePhone());
+        return update(userId, updatedUser);
+    }
+
+    @PostMapping("/answerQuestionnaire/{userId}")
+    public ResponseEntity<String> answerQuestionnaire(@PathVariable Long userId, @RequestBody UserDto updatedUserAfterQuestionnaire) {
+        return update(userId, updatedUserAfterQuestionnaire);
+
+    }
+
+    private ResponseEntity<String> update(@PathVariable Long userId, @RequestBody UserDto updatedUser) {
         try {
             ModelMapper mapper = ModelMapperFactory.createMapper(UserDto.class);
             User userInfo = (User) mapper.mapModel(updatedUser);
-            User user = userService.updateUser(userId,userInfo);
+            userService.updateUser(userId,userInfo);
             return ResponseEntity.ok("User updated successfully");
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
@@ -103,7 +110,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
 
     private void setRoleIfUndefined(User userinfo) {
         Set<UserRole> roles = new HashSet<>();

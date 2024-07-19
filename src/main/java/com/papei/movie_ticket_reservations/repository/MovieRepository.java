@@ -37,4 +37,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> findNowMovies(@Param("currentDate") Date currentDate,
                               @Param("hourId") Long hourId);
 
+    @Query("SELECT m FROM Movie m WHERE m.id in (5, 9, 12)")
+    List<Movie> findMoviesForQuestionnaire();
 }

@@ -27,6 +27,17 @@ public class MovieDtoMapper implements ModelMapper<Movie,MovieDto > {
         return movieDto;
     }
 
+
+    public Movie mapDtoToEntity(MovieDto dto) {
+        Movie movie = new Movie();
+        movie.setDescription(dto.getDescription());
+        movie.setId(dto.getId());
+        movie.setName(dto.getName());
+        movie.setHall(dto.getHall());
+        movie.setDateRange(dto.getDateRange());
+        return movie;
+    }
+
     private void setPictureByteArray(Movie model, MovieDto movieDto) {
         String imagePath = "pictures/" + model.getPictureUrl();
         ClassLoader classLoader = MovieDtoMapper.class.getClassLoader();

@@ -1,7 +1,5 @@
 package com.papei.movie_ticket_reservations.pojo.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class UserDto {
 
     // FROM GOOGLE ACCESS_TOKEN
@@ -26,6 +24,10 @@ public class UserDto {
     private String email;
 
     private String mobilePhone;
+
+    private MovieDto chosenMovie;
+
+    private Short hasKids;
 
     public String getUserName() {
         return userName;
@@ -73,6 +75,22 @@ public class UserDto {
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    public MovieDto getChosenMovie() {
+        return chosenMovie;
+    }
+
+    public void setChosenMovie(MovieDto chosenMovie) {
+        this.chosenMovie = chosenMovie;
+    }
+
+    public Short getHasKids() {
+        return hasKids;
+    }
+
+    public void setHasKids(Short hasKids) {
+        this.hasKids = hasKids;
     }
 
     //

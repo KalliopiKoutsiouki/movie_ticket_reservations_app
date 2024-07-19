@@ -7,15 +7,15 @@ import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.repository.HourRepository;
 import com.papei.movie_ticket_reservations.repository.MovieRepository;
 import com.papei.movie_ticket_reservations.service.MovieService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -30,6 +30,11 @@ public class MovieServiceImpl implements MovieService {
 
     public List<Movie> getAllMovies() {
         return movieRepository.findAll();
+    }
+
+    @Override
+    public Movie getMovieById(Long movieId) {
+        return movieRepository.findById(movieId).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
@@ -54,4 +59,8 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findNowMovies(currentDate, hourId);
     }
 
+    @Override
+    public List<Movie> getAllMoviesForQuestionnaire() {
+        return movieRepository.findMoviesForQuestionnaire();
+    }
 }

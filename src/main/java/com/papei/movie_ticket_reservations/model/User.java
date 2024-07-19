@@ -59,6 +59,13 @@ public class User {
     @JsonIgnore
     private List<Reservation> reservations;
 
+    @ManyToOne
+    @JoinColumn(name = "CHOSEN_MOVIE_ID")
+    private Movie chosenMovie;
+
+    @Column(name = "HAS_KIDS")
+    private Short hasKids;
+
     public Long getId() {
         return id;
     }
@@ -137,6 +144,22 @@ public class User {
 
     public void setMobilePhone(String mobilePhone) {
         this.mobilePhone = mobilePhone;
+    }
+
+    public Movie getChosenMovie() {
+        return chosenMovie;
+    }
+
+    public void setChosenMovie(Movie chosenMovie) {
+        this.chosenMovie = chosenMovie;
+    }
+
+    public Short getHasKids() {
+        return hasKids;
+    }
+
+    public void setHasKids(Short hasKids) {
+        this.hasKids = hasKids;
     }
 
     @Override
