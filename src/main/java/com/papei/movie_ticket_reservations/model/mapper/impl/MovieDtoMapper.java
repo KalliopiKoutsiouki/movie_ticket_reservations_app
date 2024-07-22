@@ -23,6 +23,7 @@ public class MovieDtoMapper implements ModelMapper<Movie,MovieDto > {
         movieDto.setName(model.getName());
         movieDto.setHall(model.getHall());
         movieDto.setDateRange(model.getDateRange());
+        movieDto.setGenre(model.getGenre());
         setPictureByteArray(model, movieDto);
         return movieDto;
     }
@@ -35,6 +36,7 @@ public class MovieDtoMapper implements ModelMapper<Movie,MovieDto > {
         movie.setName(dto.getName());
         movie.setHall(dto.getHall());
         movie.setDateRange(dto.getDateRange());
+        movie.setGenre(dto.getGenre());
         return movie;
     }
 

@@ -1,6 +1,7 @@
 package com.papei.movie_ticket_reservations.pojo.dto;
 
 import com.papei.movie_ticket_reservations.model.DateRange;
+import com.papei.movie_ticket_reservations.model.Genre;
 import com.papei.movie_ticket_reservations.model.Hall;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ public class MovieDto {
     private Hall hall;
     private DateRange dateRange;
     private Double recommendationRateForUser;
+    private Set<Genre> genre;
 
     public Long getId() {
         return id;
@@ -69,5 +71,13 @@ public class MovieDto {
 
     public void setDateRange(DateRange dateRange) {
         this.dateRange = dateRange;
+    }
+
+    public Set<Genre> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Set<Genre> genre) {
+        this.genre = genre;
     }
 }

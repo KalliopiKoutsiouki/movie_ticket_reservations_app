@@ -8,7 +8,6 @@ import com.papei.movie_ticket_reservations.model.mapper.ModelMapperFactory;
 import com.papei.movie_ticket_reservations.pojo.dto.MovieDto;
 import com.papei.movie_ticket_reservations.service.MovieService;
 import com.papei.movie_ticket_reservations.service.UserService;
-import com.papei.movie_ticket_reservations.service.fuzzy.FuzzyMovieService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,9 +28,6 @@ public class MovieController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    FuzzyMovieService fuzzyMovieService;
-
     private final ModelMapper mapper = ModelMapperFactory.createMapper(MovieDto.class);
 
     @GetMapping({"/all"})
@@ -51,9 +47,7 @@ public class MovieController {
         User user = userService.getUserById(userId).get();
         Optional<Long> chosenMovieId = Optional.ofNullable(user.getChosenMovie()).map(Movie::getId);
         List<Movie> currentMovies = this.movieService.getCurrentMovies();
-        List<MovieDto> movieDtos = chosenMovieId.map(id -> this.fuzzyMovieService.getMovieRecommendationsSorted(currentMovies, id))
-                .orElseGet(() -> currentMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList());
-        return movieDtos;
+        return this.movieService.getSortedMovies(currentMovies, user, chosenMovieId);
     }
 
     @GetMapping({"/playing-now"})
@@ -67,9 +61,7 @@ public class MovieController {
         User user = userService.getUserById(userId).get();
         Optional<Long> chosenMovieId = Optional.ofNullable(user.getChosenMovie()).map(Movie::getId);
         List<Movie> upcomingMovies = this.movieService.getUpcomingMovies();
-        List<MovieDto> movieDtos = chosenMovieId.map(id -> this.fuzzyMovieService.getMovieRecommendationsSorted(upcomingMovies, id))
-                .orElseGet(() -> upcomingMovies.stream().map(movie -> (MovieDto) mapper.mapModel(movie)).toList());
-        return movieDtos;
+        return this.movieService.getSortedMovies(upcomingMovies, user, chosenMovieId);
     }
 
     @GetMapping({"/forQuestionnaire"})
